@@ -1,0 +1,10 @@
+# ★重要★ 見込み客の情報（店名・電話番号・営業記録）は個人情報を含むので
+# 絶対に GitHub に push しない。公開するのは docs/ の中の生成済みHTMLだけ。
+prospects/
+
+# 作業用
+__pycache__/
+*.pyc
+.DS_Store
+.env
+*.log

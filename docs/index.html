@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ミセバ｜小さなお店のホームページ制作</title>
+<meta name="description" content="ミセバは、ホームページをお持ちでない小規模事業者さま向けに、まず試作のページをお作りしてからご提案する個人事業です。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--main:#2D3E50;--accent:#E8A33D;--bg:#FBFAF8;--text:#1F2933;--muted:#5B6670;--line:#E6E2DC}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Noto Sans JP",-apple-system,"Hiragino Sans",sans-serif;color:var(--text);
+  background:var(--bg);line-height:1.9;font-size:16px}
+.wrap{max-width:760px;margin:0 auto;padding:0 24px}
+section{padding:56px 0}
+h1,h2{line-height:1.5;font-weight:700}
+h2{font-size:1.35rem;margin-bottom:16px;color:var(--main)}
+p{margin-bottom:16px}
+.hero{background:var(--main);color:#fff;padding:72px 0 64px}
+.hero .logo{font-size:2.2rem;letter-spacing:.12em;margin-bottom:8px}
+.hero .tag{color:var(--accent);font-weight:700;font-size:.9rem;letter-spacing:.2em;margin-bottom:24px}
+.hero p{opacity:.92;margin-bottom:0}
+.steps{list-style:none;counter-reset:s}
+.steps li{counter-increment:s;position:relative;padding-left:52px;margin-bottom:24px}
+.steps li::before{content:counter(s);position:absolute;left:0;top:2px;width:34px;height:34px;
+  background:var(--accent);color:#fff;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;font-weight:700}
+.steps b{display:block;color:var(--main)}
+.price{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.price th,.price td{padding:14px 18px;text-align:left;border-bottom:1px solid var(--line);font-size:.95rem}
+.price th{background:#F4F1EC;width:45%;font-weight:700}
+.price tr:last-child th,.price tr:last-child td{border-bottom:none}
+.note{background:#fff;border-left:4px solid var(--accent);padding:20px 24px;border-radius:0 10px 10px 0;font-size:.93rem;color:var(--muted)}
+.mail{display:inline-block;background:var(--main);color:#fff;text-decoration:none;
+  padding:14px 28px;border-radius:8px;font-weight:700;word-break:break-all;
+  transition:transform .3s ease-out,box-shadow .3s ease-out}
+.mail:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.16)}
+footer{background:#1a1a1a;color:#999;padding:32px 0;font-size:.85rem}
+footer p{margin-bottom:6px}
+@media(min-width:769px){section{padding:72px 0}.hero .logo{font-size:2.8rem}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="tag">MISEBA</div>
+    <h1 class="logo">ミセバ</h1>
+    <p>ホームページをまだお持ちでない小さなお店に、<br>
+       まず「見てもらえる形」をお作りしています。</p>
+  </div>
+</header>
+
+<main>
+  <section>
+    <div class="wrap">
+      <h2>先に作って、見ていただいてから</h2>
+      <p>ホームページは「頼んでみないと、どんなものができるか分からない」のが不安だと思います。
+         ミセバでは、ご依頼をいただく前に試作のページをお作りして、実物を見ていただいてから
+         ご判断いただく形をとっています。</p>
+      <p>気に入らなければ、そのまま断っていただいて構いません。費用はかかりません。</p>
+    </div>
+  </section>
+
+  <section style="background:#fff">
+    <div class="wrap">
+      <h2>進め方</h2>
+      <ol class="steps">
+        <li><b>試作ページをお送りします</b>公開されている情報をもとに、1枚のページをお作りします。</li>
+        <li><b>見ていただきます</b>文章や写真、載せたい内容のご希望をお聞かせください。</li>
+        <li><b>修正してお渡しします</b>ご希望に合わせて直したうえで、正式に公開します。</li>
+        <li><b>公開後もお手伝いします</b>月1回の更新や、口コミへの返信などを承ります。</li>
+      </ol>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>費用の目安</h2>
+      <table class="price">
+        <tr><th>最初にお作りする費用</th><td>30,000円 〜 50,000円</td></tr>
+        <tr><th>公開後の月額</th><td>3,000円 〜 5,000円</td></tr>
+      </table>
+      <p style="font-size:.9rem;color:var(--muted);margin-top:12px">
+        月額には、ページの公開の維持、月1回程度の内容の更新、
+        Googleマップの口コミへの返信のお手伝いが含まれます。
+        内容によって変わりますので、まずはご相談ください。</p>
+    </div>
+  </section>
+
+  <section style="background:#fff">
+    <div class="wrap">
+      <h2>ミセバについて</h2>
+      <div class="note">
+        <p style="margin-bottom:8px"><b>ミセバは個人で運営しています。</b></p>
+        <p style="margin-bottom:0">法人ではありませんので、大きな会社のような体制はありません。
+        そのぶん、直接やりとりができて、小さなご相談にも対応しやすいのが取り柄です。
+        試作ページはAIを使って効率よくお作りしているため、この価格でご提供できています。</p>
+      </div>
+      <table class="price" style="margin-top:20px">
+        <tr><th>運営者</th><td>saku</td></tr>
+        <tr><th>所在地</th><td>準備中</td></tr>
+        <tr><th>連絡先</th><td><a href="mailto:onikudaisuki1388@gmail.com">onikudaisuki1388@gmail.com</a></td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>お問い合わせ</h2>
+      <p>ご相談・ご質問はメールでお受けしています。
+         「うちの店だとどんな感じになる？」といったご相談だけでも構いません。</p>
+      <p style="margin-bottom:24px"><a href="mailto:onikudaisuki1388@gmail.com" class="mail">onikudaisuki1388@gmail.com</a></p>
+      <p style="font-size:.9rem;color:var(--muted);margin-bottom:0">
+        お返事は数日いただくことがあります。あらかじめご了承ください。</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><strong style="color:#ddd">ミセバ</strong>（個人事業）</p>
+    <p><a href="mailto:onikudaisuki1388@gmail.com" style="color:#bbb">onikudaisuki1388@gmail.com</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,48 @@
+{
+  "brand": {
+    "name": "ミセバ",
+    "name_en": "Miseba",
+    "contact_name": "saku",
+    "contact_email": "onikudaisuki1388@gmail.com",
+    "contact_phone": ""
+  },
+
+  "search": {
+    "area": "東京都杉並区",
+    "keywords": ["屋根修理", "水道業者", "工務店", "電気工事", "外壁塗装"],
+    "max_per_run": 10,
+    "filter": {
+      "require_no_website": true,
+      "min_rating": 4.0,
+      "min_review_count": 3,
+      "max_review_count": 30
+    }
+  },
+
+  "daily": {
+    "max_new_sites": 3
+  },
+
+  "publish": {
+    "provider": "github_pages",
+    "github_user": "fukinotoudaikirai1128-lang",
+    "repo_name": "miseba",
+    "base_path": "docs/p",
+    "slug_length": 20
+  },
+
+  "outreach": {
+    "channel": "draft_only",
+    "daily_send_cap": 10,
+    "require_user_confirmation": false,
+
+    "_comment": "channel: draft_only（書き出すだけ）| browser（ブラウザから送信）。require_user_confirmation はユーザー本人の指示により false。",
+
+    "pricing": {
+      "setup_min": 30000,
+      "setup_max": 50000,
+      "monthly_min": 3000,
+      "monthly_max": 5000
+    }
+  }
+}
