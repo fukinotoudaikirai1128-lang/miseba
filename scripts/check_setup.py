@@ -76,6 +76,16 @@ if cfg:
           "連絡先メールアドレスを入れてください（後回しでも可）", warn_only=True)
     check("search.area が埋まっている", filled(cfg.get("search", {}).get("area")),
           "探すエリアを入れてください（例: 東京都杉並区）")
+    check("brand.line_url が埋まっている（返信の受け皿）", filled(brand.get("line_url")),
+          "LINE公式アカウントのURLを入れると、はがきにQRが入ります", warn_only=True)
+
+    # 使ってはいけない連絡手段が設定されていないか
+    ch = cfg.get("outreach", {}).get("channel", "")
+    check(f"outreach.channel が安全な値（現在: {ch}）",
+          ch in ("postal", "phone", "draft_only"),
+          "★法務★ mail / google_message は使えません。brand/LEGAL.md §1 を読んでください")
+    if ch == "google_message":
+        print("     → Googleビジネスプロフィールのチャットは2024年7月31日に終了しています")
 
     if filled(pub.get("github_user")) and filled(pub.get("repo_name")):
         url = f"https://{pub['github_user']}.github.io/{pub['repo_name']}/"
@@ -84,6 +94,11 @@ if cfg:
 # ---------------------------------------------------------------- ファイル構成
 print("\n【2】ファイル構成")
 check("CLAUDE.md がある", (ROOT / "CLAUDE.md").exists())
+check("brand/LEGAL.md がある（法務ルール）", (ROOT / "brand" / "LEGAL.md").exists(),
+      "★重要★ 営業してよい相手・手段の判断基準です")
+check("DAILY.md がある（毎日の手順書）", (ROOT / "DAILY.md").exists(), warn_only=True)
+check("scripts/make_postcard.py がある", (ROOT / "scripts" / "make_postcard.py").exists(),
+      "はがきが作れません")
 check(".claude/skills/ にスキルが5つある",
       len(list((ROOT / ".claude" / "skills").glob("*/SKILL.md"))) == 5,
       "zipの展開が不完全かもしれません")

@@ -4,7 +4,9 @@
     "name_en": "Miseba",
     "contact_name": "saku",
     "contact_email": "onikudaisuki1388@gmail.com",
-    "contact_phone": ""
+    "contact_phone": "",
+    "line_url": "https://lin.ee/VGyzGYv",
+    "line_id": "@337wgybk"
   },
 
   "search": {
@@ -32,17 +34,27 @@
   },
 
   "outreach": {
-    "channel": "draft_only",
+    "channel": "postal",
     "daily_send_cap": 10,
     "require_user_confirmation": false,
 
-    "_comment": "channel: draft_only（書き出すだけ）| browser（ブラウザから送信）。require_user_confirmation はユーザー本人の指示により false。",
+    "_comment": "channel: postal（はがき・本命／85円）| phone（電話・0円）| draft_only（書き出すだけ）。mail と google_message は使用禁止 — brand/LEGAL.md §1 を参照。",
+
+    "excluded_business_types": [
+      "株式会社・有限会社・合同会社が店名に付く店",
+      "全国チェーン・フランチャイズ加盟店",
+      "士業（弁護士・税理士・司法書士・行政書士）",
+      "医療機関（病院・クリニック・歯科）",
+      "接骨院・整骨院・鍼灸院・薬局"
+    ],
 
     "pricing": {
-      "setup_min": 30000,
+      "setup_min": 50000,
       "setup_max": 50000,
-      "monthly_min": 3000,
-      "monthly_max": 5000
+      "monthly_min": 5000,
+      "monthly_max": 5000,
+      "revisions_included": 2,
+      "_monitor_note": "最初の3件のみ 30,000円。ただし『実績として紹介させていただく』ことが条件。理由なしの値引きはしない。"
     }
   }
 }

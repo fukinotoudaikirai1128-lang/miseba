@@ -153,7 +153,16 @@ def build(slug: str) -> Path:
     phone = info.get("phone", "")
     phone_raw = re.sub(r"[^\d+]", "", phone)
 
+    # ミセバ側の連絡先（config.json から。フッターの注記に入れる）
+    try:
+        cfg = json.loads((ROOT / "config.json").read_text(encoding="utf-8"))
+        brand = cfg.get("brand", {})
+    except Exception:
+        brand = {}
+
     repl = {
+        "{{MISEBA_EMAIL}}": esc(brand.get("contact_email", "")),
+        "{{MISEBA_LINE_URL}}": esc(brand.get("line_url", "")),
         "{{SHOP_NAME}}": esc(info.get("name", "")),
         "{{AREA}}": esc(area),
         "{{INDUSTRY_LABEL}}": ind["label"],
