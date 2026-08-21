@@ -22,6 +22,26 @@ Disallow: /p/
 """
 
 
+def clear_dir(d):
+    """フォルダの中身を消す。フォルダ自体が消せなくても失敗にしない。
+
+    Windows + OneDrive では同期プロセスがフォルダを掴んでいて
+    shutil.rmtree が PermissionError(WinError 5) で落ちることがある。
+    中身さえ空にできれば上書きコピーには支障がない。
+    """
+    if not d.exists():
+        return
+    for item in sorted(d.rglob("*"), reverse=True):
+        try:
+            item.unlink() if item.is_file() else item.rmdir()
+        except OSError:
+            pass
+    try:
+        d.rmdir()
+    except OSError:
+        pass
+
+
 def random_slug(n: int) -> str:
     alphabet = string.ascii_lowercase + string.digits
     return "".join(secrets.choice(alphabet) for _ in range(n))
@@ -86,8 +106,8 @@ def main(slug: str, do_push: bool = False):
 
     dest = ROOT / pub.get("base_path", "docs/p") / public_slug
     if dest.exists():
-        shutil.rmtree(dest)
-    shutil.copytree(site, dest)
+        clear_dir(dest)
+    shutil.copytree(site, dest, dirs_exist_ok=True)
 
     # --- 検証: noindex が全ページに入っているか ---
     problems = []
@@ -97,8 +117,12 @@ def main(slug: str, do_push: bool = False):
             problems.append(f"{html.name}: noindex が無い（検索に載ってしまう）")
         if "が作成した試作サイト" not in text or "ミセバ" not in text:
             problems.append(f"{html.name}: ミセバの試作である旨の注記が無い")
-        if "tel:" not in text:
-            problems.append(f"{html.name}: 電話リンクが無い")
+        phone_digits = "".join(c for c in info.get("phone", "") if c.isdigit() or c == "+")
+        if phone_digits:
+            if 'href="tel:' + phone_digits + '"' not in text:
+                problems.append(f"{html.name}: その店の電話番号への tel: リンクが無い")
+        elif 'href="tel:"' in text:
+            problems.append(f"{html.name}: 中身が空の tel: リンクがある（電話番号未取得の店）")
         left = re.findall(r"\{\{[A-Z_]+\}\}", text)
         if left:
             problems.append(f"{html.name}: 未置換のプレースホルダー {set(left)}")
@@ -111,7 +135,7 @@ def main(slug: str, do_push: bool = False):
         print("  docs/robots.txt を作成しました")
 
     if problems:
-        shutil.rmtree(dest)
+        clear_dir(dest)
         print("公開を中止しました。次の問題を直してください:")
         for p in problems:
             print(f"  - {p}")

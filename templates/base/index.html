@@ -32,8 +32,8 @@ body{
   font-family:"Noto Sans JP",-apple-system,BlinkMacSystemFont,"Hiragino Sans",sans-serif;
   color:var(--text); background:var(--bg);
   line-height:1.8; font-size:16px;
-  padding-bottom:72px; /* スマホ固定バー分 */
-}
+<!--IF:PHONE-->  padding-bottom:72px; /* スマホ固定バー分 */
+<!--ENDIF:PHONE-->}
 img{max-width:100%;height:auto;display:block}
 a{color:inherit}
 .wrap{max-width:1100px;margin:0 auto;padding:0 20px}
@@ -182,19 +182,18 @@ footer a:hover{color:#fff}
 </head>
 <body>
 
-<header>
+<header id="top">
   <div class="wrap hd">
-    <a href="index.html" class="logo">{{SHOP_NAME}}</a>
+    <a href="#top" class="logo">{{SHOP_NAME}}</a>
     <nav>
       <ul>
-        <li><a href="index.html">ホーム</a></li>
-        <li><a href="services.html">対応内容</a></li>
-        <li><a href="about.html">お店について</a></li>
-        <li><a href="contact.html">お問い合わせ</a></li>
+        <li><a href="#top">ホーム</a></li>
+        <li><a href="#services">対応内容</a></li>
+        <li><a href="#info">店舗情報</a></li>
       </ul>
     </nav>
-    <a href="tel:{{PHONE_RAW}}" class="hd-tel">📞 {{PHONE}}</a>
-  </div>
+<!--IF:PHONE-->    <a href="tel:{{PHONE_RAW}}" class="hd-tel">📞 {{PHONE}}</a>
+<!--ENDIF:PHONE-->  </div>
 </header>
 
 <main>
@@ -204,8 +203,8 @@ footer a:hover{color:#fff}
     <div class="wrap">
       <h1>{{HERO_HEADLINE}}</h1>
       <p>{{HERO_SUB}}</p>
-      <a href="tel:{{PHONE_RAW}}" class="btn">📞 {{PHONE}} に電話する</a>
-    </div>
+<!--IF:PHONE-->      <a href="tel:{{PHONE_RAW}}" class="btn">📞 {{PHONE}} に電話する</a>
+<!--ENDIF:PHONE-->    </div>
   </section>
 
   <!-- お困りごと -->
@@ -220,18 +219,17 @@ footer a:hover{color:#fff}
   </section>
 
   <!-- 対応内容 -->
-  <section>
+  <section id="services">
     <div class="wrap reveal">
       <h2>対応内容</h2>
       <p class="lead">{{SERVICES_LEAD}}</p>
       <div class="cards">
         {{SERVICE_CARDS}}
       </div>
-      <p style="margin-top:24px"><a href="services.html" class="btn">対応内容をくわしく見る</a></p>
     </div>
   </section>
 
-  <!-- Google評価（★渡された数値のみ） -->
+<!--IF:RATING-->  <!-- Google評価（★渡された数値のみ） -->
   <section class="rating">
     <div class="wrap reveal">
       <h2>お客様からの評価</h2>
@@ -240,8 +238,8 @@ footer a:hover{color:#fff}
       <p class="src">Googleマップの口コミ {{REVIEW_COUNT}}件の平均評価です</p>
     </div>
   </section>
-
-  <!-- 口コミ -->
+<!--ENDIF:RATING-->
+<!--IF:VOICES-->  <!-- 口コミ -->
   <section>
     <div class="wrap reveal">
       <h2>お客様の声</h2>
@@ -251,43 +249,41 @@ footer a:hover{color:#fff}
       </div>
     </div>
   </section>
-
+<!--ENDIF:VOICES-->
   <!-- 店舗情報 -->
-  <section class="troubles">
+  <section class="troubles" id="info">
     <div class="wrap reveal">
       <h2>店舗情報</h2>
       <table class="info-table">
         <tr><th>店名</th><td>{{SHOP_NAME}}</td></tr>
         <tr><th>所在地</th><td>{{ADDRESS}}</td></tr>
-        <tr><th>電話番号</th><td><a href="tel:{{PHONE_RAW}}">{{PHONE}}</a></td></tr>
-        <tr><th>営業時間</th><td>{{HOURS}}</td></tr>
+<!--IF:PHONE-->        <tr><th>電話番号</th><td><a href="tel:{{PHONE_RAW}}">{{PHONE}}</a></td></tr>
+<!--ENDIF:PHONE-->        <tr><th>営業時間</th><td>{{HOURS}}</td></tr>
       </table>
     </div>
   </section>
 
-  <!-- CTA -->
+<!--IF:PHONE-->  <!-- CTA -->
   <section class="cta">
     <div class="wrap reveal">
       <h2>まずはお気軽にご相談ください</h2>
       <p>お見積もりのご相談だけでも承ります。</p>
       <div class="cta-btns">
         <a href="tel:{{PHONE_RAW}}" class="btn">📞 電話する</a>
-        <a href="contact.html" class="btn btn-outline">お問い合わせ</a>
       </div>
     </div>
   </section>
-
+<!--ENDIF:PHONE-->
 </main>
 
 <footer>
   <div class="wrap">
     <ul class="fnav">
-      <li><a href="index.html">ホーム</a></li>
-      <li><a href="services.html">対応内容</a></li>
-      <li><a href="about.html">お店について</a></li>
-      <li><a href="contact.html">お問い合わせ</a></li>
+      <li><a href="#top">ホーム</a></li>
+      <li><a href="#services">対応内容</a></li>
+      <li><a href="#info">店舗情報</a></li>
     </ul>
-    <p>{{SHOP_NAME}}<br>{{ADDRESS}}<br>TEL: {{PHONE}}</p>
+    <p>{{SHOP_NAME}}<br>{{ADDRESS}}<!--IF:PHONE--><br>TEL: {{PHONE}}<!--ENDIF:PHONE--></p>
     <p class="miseba-note">
       このページは、Googleマップ上の公開情報をもとに<strong>ミセバ</strong>が作成した試作サイトです。
       内容の追加・修正が可能です。不要な場合はご連絡ください。すぐに削除いたします。<br>
@@ -297,11 +293,10 @@ footer a:hover{color:#fff}
   </div>
 </footer>
 
-<div class="mobile-bar">
+<!--IF:PHONE--><div class="mobile-bar">
   <a href="tel:{{PHONE_RAW}}" class="mb-tel">📞 電話する</a>
-  <a href="contact.html" class="mb-contact">お問い合わせ</a>
 </div>
-
+<!--ENDIF:PHONE-->
 <script>
 (function(){
   var els = document.querySelectorAll('.reveal');

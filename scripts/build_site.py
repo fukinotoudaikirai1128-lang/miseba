@@ -106,6 +106,19 @@ def stars(rating) -> str:
     return "★" * full + ("☆" if half else "") + "☆" * (5 - full - half)
 
 
+def apply_conditions(tpl: str, flags: dict) -> str:
+    """<!--IF:X--> ... <!--ENDIF:X--> を、flags[X] が偽なら中身ごと削る。
+
+    渡されていない情報のセクションを丸ごと省くための仕組み。
+    CLAUDE.md 1-1「情報がない項目はセクションごと省略。空欄で残さない」に対応する。
+    """
+    for name, keep in flags.items():
+        pat = re.compile(r"<!--IF:" + name + r"-->(.*?)<!--ENDIF:" + name + r"-->", re.S)
+        tpl = pat.sub((lambda m: m.group(1)) if keep else "", tpl)
+    # 削った跡に空行が続くのを詰める
+    return re.sub(r"\n{3,}", "\n\n", tpl)
+
+
 def esc(s: str) -> str:
     return (str(s).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;"))
 
@@ -140,8 +153,7 @@ def build(slug: str) -> Path:
             f'<div class="voice"><p>{esc(v)}</p>'
             f'<cite>Googleマップの口コミより</cite></div>'
         )
-    voice_items = "\n        ".join(voices) if voices else \
-        '<div class="voice"><p>口コミは準備中です。</p></div>'
+    voice_items = "\n        ".join(voices)
 
     hours = info.get("hours") or []
     hours_html = "<br>".join(esc(h) for h in hours) if hours else "お問い合わせください"
@@ -170,9 +182,9 @@ def build(slug: str) -> Path:
         "{{PHONE}}": esc(phone),
         "{{PHONE_RAW}}": phone_raw,
         "{{HOURS}}": hours_html,
-        "{{RATING}}": str(info.get("rating", "")),
+        "{{RATING}}": str(info.get("rating") or ""),
         "{{STARS}}": stars(info.get("rating")),
-        "{{REVIEW_COUNT}}": str(info.get("review_count", "")),
+        "{{REVIEW_COUNT}}": str(info.get("review_count") or ""),
         "{{COLOR_MAIN}}": ind["main"],
         "{{COLOR_ACCENT}}": ind["accent"],
         "{{COLOR_BG}}": ind["bg"],
@@ -184,6 +196,15 @@ def build(slug: str) -> Path:
         "{{SERVICE_CARDS}}": service_cards,
         "{{VOICE_ITEMS}}": voice_items,
     }
+    # 渡されていない情報のセクションは、置換の前に丸ごと落とす
+    rating = info.get("rating")
+    review_count = info.get("review_count") or 0
+    tpl = apply_conditions(tpl, {
+        "PHONE": bool(phone_raw),
+        "RATING": rating is not None and review_count > 0,
+        "VOICES": bool(voices),
+    })
+
     for k, v in repl.items():
         tpl = tpl.replace(k, v)
 
