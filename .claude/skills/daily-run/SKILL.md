@@ -28,7 +28,7 @@ description: 「今日の仕事始めて」「営業始めて」「いつもの�
         ↓
 2. new-preview        1店ずつ試作サイトを作る（STEP1〜5）
         ↓
-3. publish-preview    GitHub Pages に公開してURLを発行（push まで自動）
+3. publish-preview    Netlify に公開してURLを発行（アップロードは人の手）
         ↓
 4. send-outreach      はがきのHTMLを作る（ユーザーが印刷して投函）
 ```
@@ -63,12 +63,13 @@ description: 「今日の仕事始めて」「営業始めて」「いつもの�
 python3 scripts/build_site.py <slug>          # STEP1〜3（骨組み・デザイン・画像）
 # → STEP4（文言）と STEP5（最終チェック）は Claude が手で行う
 python3 scripts/preview.py <slug>             # ブラウザで目視確認
-python3 scripts/publish.py <slug> --push      # 検証 → docs/ にコピー → git push
+python3 scripts/publish.py <slug>             # 検証 → docs/p/ にコピー（公開はNetlifyへ手動アップ）
 python3 scripts/make_postcard.py <slug>       # はがきHTMLを作る
 ```
 
-`publish.py --push` は `git add docs/` しかしないので、`prospects/` は上がりません。
-push に失敗したら、GitHub Desktop から手動で Push するようユーザーに伝える。
+`publish.py` は GitHub に push しません。`prospects/` と `docs/p/` は .gitignore 済みです。
+公開は https://app.netlify.com/drop に `docs` フォルダをドラッグ＆ドロップする作業で、
+**これはユーザーの作業**です。Claude は代行しません。
 
 ---
 

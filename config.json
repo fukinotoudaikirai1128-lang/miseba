@@ -26,11 +26,12 @@
   },
 
   "publish": {
-    "provider": "github_pages",
-    "github_user": "fukinotoudaikirai1128-lang",
-    "repo_name": "miseba",
+    "provider": "netlify",
+    "site_url": "",
     "base_path": "docs/p",
-    "slug_length": 20
+    "slug_length": 20,
+
+    "_comment": "GitHub Pages は使わない。公開リポジトリのファイルページ(/blob/)は検索避けされておらず、店名が読めてしまうため（LEGAL.md 2 の『URLは推測できないこと』が破れる）。Netlify に docs フォルダをアップロードして公開する。site_url には発行されたURL（例 https://miseba.netlify.app）を入れる。"
   },
 
   "outreach": {

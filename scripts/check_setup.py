@@ -66,10 +66,8 @@ if cfg:
         s = str(v or "")
         return bool(s) and "（" not in s and "(" not in s
 
-    check("publish.github_user が埋まっている", filled(pub.get("github_user")),
-          "GitHubのユーザー名を入れてください")
-    check("publish.repo_name が埋まっている", filled(pub.get("repo_name")),
-          "リポジトリ名を入れてください")
+    check("publish.site_url が埋まっている（Netlifyの公開URL）", filled(pub.get("site_url")),
+          "https://app.netlify.com/drop に docs フォルダを上げて、発行されたURLを入れてください")
     check("brand.contact_name が埋まっている", filled(brand.get("contact_name")),
           "営業メッセージで名乗る名前を入れてください")
     check("brand.contact_email が埋まっている", filled(brand.get("contact_email")),
@@ -87,9 +85,9 @@ if cfg:
     if ch == "google_message":
         print("     → Googleビジネスプロフィールのチャットは2024年7月31日に終了しています")
 
-    if filled(pub.get("github_user")) and filled(pub.get("repo_name")):
-        url = f"https://{pub['github_user']}.github.io/{pub['repo_name']}/"
-        print(f"     → 公開URLはこうなります: {url}")
+    if filled(pub.get("site_url")):
+        base = pub["site_url"].rstrip("/")
+        print(f"     → 試作サイトのURLはこうなります: {base}/p/<ランダム20文字>/")
 
 # ---------------------------------------------------------------- ファイル構成
 print("\n【2】ファイル構成")
@@ -117,16 +115,16 @@ if (ROOT / ".gitignore").exists():
           "★重要★ .gitignore に prospects/ の行を追加してください")
 
 # ---------------------------------------------------------------- git
-print("\n【3】GitHub との連携")
+print("\n【3】GitHub（バックアップ用・公開には使いません）")
 code, _ = git("rev-parse", "--is-inside-work-tree")
 is_repo = code == 0
 if check("gitリポジトリになっている", is_repo,
-         "このフォルダで `git init` を実行してください"):
+         "このフォルダで `git init` を実行してください", warn_only=True):
 
     code, out = git("remote", "-v")
     has_remote = code == 0 and "github.com" in out
     check("GitHubのリモートが設定されている", has_remote,
-          "`git remote add origin https://github.com/ユーザー名/リポジトリ名.git`")
+          "`git remote add origin https://github.com/ユーザー名/リポジトリ名.git`", warn_only=True)
     if has_remote:
         first = out.split("\n")[0]
         print(f"     → {first}")
@@ -140,6 +138,13 @@ if check("gitリポジトリになっている", is_repo,
         print("     → 含まれているファイル:")
         for line in out.strip().split("\n")[:5]:
             print(f"        {line}")
+
+    code, out = git("ls-files", "docs/p")
+    tracked_p = bool(out.strip())
+    check("docs/p/ がGitに含まれていない（店名の露出防止）", not tracked_p,
+          "★至急★ `git rm -r --cached docs/p` を実行してください")
+    if tracked_p:
+        print("     → 公開リポジトリのファイルページから店名が読めてしまいます")
 
     code, out = git("status", "--porcelain")
     if out.strip():

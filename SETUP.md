@@ -1,5 +1,21 @@
 # セットアップ手順
 
+> ## ⚠️ この文書の一部は古くなっています（2026-08-21 更新）
+>
+> **GitHub Pages での公開はやめました。** 公開リポジトリのファイルページ
+> （`github.com/.../blob/...`）は検索避けされておらず、店名を含むHTMLが
+> 検索エンジンから読めてしまうためです。試作サイトに入れた `noindex` は
+> GitHub 上のコピーには効きません。
+>
+> **いまの公開方法：** https://app.netlify.com/drop に `docs` フォルダを
+> ドラッグ＆ドロップする。詳しくは `.claude/skills/publish-preview/SKILL.md` を見てください。
+>
+> **リポジトリは非公開にして構いません。** Pages を使わないので支障ありません。
+> 以下に出てくる「Public にする」「GitHub Pages を有効にする」手順は読み飛ばしてください。
+> `docs/p/` と `prospects/` は `.gitignore` 済みで、GitHub には上がりません。
+
+
+
 所要時間およそ15分。費用は0円です。
 
 **終わったかどうかは、最後に `python3 scripts/check_setup.py` を実行すれば分かります。**

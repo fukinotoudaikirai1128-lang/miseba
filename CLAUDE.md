@@ -216,7 +216,7 @@ prospects/<slug>/       1店舗 = 1フォルダ。他の店のファイルを混
   info.json             店舗情報（入力）
   site/                 生成したサイト（index.html など）
   outreach.md           送信文面と送信記録
-docs/p/<slug>/          公開用。GitHub Pages がここを配信する
+docs/p/<slug>/          公開用。Netlify にアップロードする。GitHubには置かない（.gitignore済み）
 templates/base/         雛形。直接編集しない（コピーして使う）
 ```
 
