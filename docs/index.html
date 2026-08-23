@@ -159,6 +159,21 @@ p:last-child{margin-bottom:0}
   border-left:3px solid var(--brass);padding:6px 0 6px 26px;margin:8px 0 30px;
 }
 
+/* ---------- 作例タブ ---------- */
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 22px}
+.tab{
+  font:inherit;font-size:.86rem;font-weight:700;letter-spacing:.04em;
+  padding:10px 18px;min-height:44px;border-radius:100px;
+  border:1px solid var(--line);background:var(--paper-2);color:var(--ink-soft);
+  cursor:pointer;transition:background .35s var(--ease),color .35s var(--ease),
+    border-color .35s var(--ease),transform .35s var(--ease);
+}
+.tab:hover{border-color:var(--brass);color:var(--brass);transform:translateY(-2px)}
+.tab.is-on{background:var(--ink);border-color:var(--ink);color:#F6F2EA}
+.tab.is-on:hover{transform:none}
+.screen.swapping iframe{opacity:0}
+.screen iframe{transition:opacity .3s var(--ease)}
+
 /* ---------- 作例（ブラウザ風モックアップ） ---------- */
 .showcase{margin-top:8px}
 .browser{
@@ -377,19 +392,29 @@ footer .fnote{margin-top:18px;font-size:.78rem;color:#69747C}
     <div class="wrap reveal">
       <div class="label">02 &nbsp;&nbsp;WORKS</div>
       <h2>こんなホームページをお作りします</h2>
-      <p class="lead" style="max-width:44em">
-        下は<strong>見本として用意した架空のお店</strong>のページです。実在しません。
-        実際のご依頼では、お店の写真・実際のお仕事の内容・営業時間などに置き換えてお作りします。</p>
+      <p class="lead" style="max-width:46em">
+        業種ごとに見本を用意しました。下のボタンで切り替わります。
+        <strong>「会社名」と書いてある場所に、お店の名前が入ります。</strong>
+        写真・お仕事の内容・営業時間も、すべてお店のものに置き換えてお作りします。</p>
+
+      <div class="tabs" role="tablist" id="demo-tabs">
+        <button class="tab is-on" role="tab" aria-selected="true"  data-key="roofing"      data-label="屋根工事店">屋根工事</button>
+        <button class="tab"       role="tab" aria-selected="false" data-key="plumbing"     data-label="水道工事店">水道工事</button>
+        <button class="tab"       role="tab" aria-selected="false" data-key="construction" data-label="工務店">工務店</button>
+        <button class="tab"       role="tab" aria-selected="false" data-key="electrical"   data-label="電気工事店">電気工事</button>
+        <button class="tab"       role="tab" aria-selected="false" data-key="relaxation"   data-label="リラクゼーションサロン">リラクゼーション</button>
+      </div>
+
       <div class="showcase">
         <div class="browser">
           <div class="bar">
             <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-            <div class="url">見本：やまだ屋根工事（架空のお店）</div>
+            <div class="url" id="demo-url">見本：屋根工事店（実在しません）</div>
           </div>
-          <div class="screen">
-            <iframe src="./demo/" title="見本サイトのプレビュー" loading="lazy" scrolling="no" tabindex="-1"></iframe>
+          <div class="screen" id="demo-screen">
+            <iframe id="demo-frame" src="./demo/roofing/" title="見本サイトのプレビュー" loading="lazy" scrolling="no" tabindex="-1"></iframe>
             <div class="veil"></div>
-            <a href="./demo/" class="btn btn-ink open" target="_blank" rel="noopener"><span>見本を開いてみる</span></a>
+            <a href="./demo/roofing/" class="btn btn-ink open" id="demo-open" target="_blank" rel="noopener"><span>この見本を大きく見る</span></a>
           </div>
         </div>
       </div>
@@ -648,6 +673,37 @@ footer .fnote{margin-top:18px;font-size:.78rem;color:#69747C}
       ticking = false;
     });
   }
+  /* --- 作例タブの切り替え --- */
+  var tabs = document.getElementById('demo-tabs');
+  if(tabs){
+    tabs.addEventListener('click', function(ev){
+      var b = ev.target.closest('.tab');
+      if(!b || b.classList.contains('is-on')) return;
+      var all = tabs.querySelectorAll('.tab');
+      for(var i=0;i<all.length;i++){
+        all[i].classList.remove('is-on');
+        all[i].setAttribute('aria-selected','false');
+      }
+      b.classList.add('is-on');
+      b.setAttribute('aria-selected','true');
+
+      var key = b.getAttribute('data-key');
+      var url = './demo/' + key + '/';
+      var screen = document.getElementById('demo-screen');
+      var frame  = document.getElementById('demo-frame');
+      var label  = document.getElementById('demo-url');
+      var open   = document.getElementById('demo-open');
+
+      if(screen) screen.classList.add('swapping');
+      window.setTimeout(function(){
+        if(frame) frame.src = url;
+        if(open)  open.href = url;
+        if(label) label.textContent = '見本：' + b.getAttribute('data-label') + '（実在しません）';
+        if(screen) screen.classList.remove('swapping');
+      }, 180);
+    });
+  }
+
   window.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();

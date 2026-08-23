@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>【見本】会社名｜〇〇県〇〇市の屋根工事店</title>
+<meta name="description" content="〇〇県〇〇市の屋根工事店、会社名です。小さな不具合のうちにご相談いただければ、費用も工期も抑えられます。まずはお気軽にお電話ください。">
+<meta property="og:title" content="会社名">
+<meta property="og:description" content="小さな不具合のうちにご相談いただければ、費用も工期も抑えられます。まずはお気軽にお電話ください。">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ===== 業種カラー（CLAUDE.md §2-1 から差し替える） ===== */
+:root{
+  --main:#1B4965;
+  --accent:#F4A261;
+  --bg:#F8F9FA;
+  --text:#1F2933;
+  --muted:#5B6670;
+  --line:#E3E7EA;
+  --white:#fff;
+  --radius:14px;
+  --shadow:0 4px 16px rgba(0,0,0,.08);
+  --shadow-lg:0 10px 32px rgba(0,0,0,.14);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Noto Sans JP",-apple-system,BlinkMacSystemFont,"Hiragino Sans",sans-serif;
+  color:var(--text); background:var(--bg);
+  line-height:1.8; font-size:16px;
+  padding-bottom:72px; /* スマホ固定バー分 */
+}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+section{padding:56px 0}
+@media(min-width:769px){
+  section{padding:88px 0}
+  body{padding-bottom:0}
+}
+h1,h2,h3{line-height:1.4;font-weight:700}
+h2{font-size:clamp(1.5rem,4.5vw,2.1rem);margin-bottom:12px}
+h3{font-size:1.15rem;margin-bottom:8px}
+.lead{color:var(--muted);margin-bottom:32px}
+
+/* ===== ヘッダー ===== */
+header{
+  position:sticky;top:0;z-index:50;background:rgba(255,255,255,.96);
+  border-bottom:1px solid var(--line);backdrop-filter:blur(8px);
+}
+.hd{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-weight:700;font-size:1.1rem;color:var(--main);text-decoration:none}
+nav ul{display:flex;gap:24px;list-style:none}
+nav a{text-decoration:none;color:var(--text);font-size:.95rem;position:relative;padding:4px 0}
+nav a::after{
+  content:"";position:absolute;left:0;bottom:0;width:0;height:2px;
+  background:var(--accent);transition:width .3s ease-out;
+}
+nav a:hover::after{width:100%}
+.hd-tel{display:none}
+@media(min-width:769px){
+  .hd-tel{
+    display:inline-block;background:var(--main);color:#fff;text-decoration:none;
+    padding:10px 20px;border-radius:999px;font-weight:700;font-size:.95rem;
+    transition:transform .3s ease-out,box-shadow .3s ease-out;
+  }
+  .hd-tel:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+}
+@media(max-width:768px){ nav{display:none} }
+
+/* ===== ヒーロー ===== */
+.hero{position:relative;min-height:clamp(400px,60vh,560px);display:flex;align-items:center;color:#fff}
+.hero::before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(rgba(0,0,0,.52),rgba(0,0,0,.42)),url("https://images.unsplash.com/photo-1632759145351-1d592919f522?w=1600&q=80") center/cover;
+}
+.hero .wrap{position:relative;z-index:1;padding-top:48px;padding-bottom:48px}
+.hero h1{font-size:clamp(1.75rem,5.5vw,3rem);margin-bottom:16px;text-shadow:0 2px 12px rgba(0,0,0,.3)}
+.hero p{font-size:clamp(1rem,2.5vw,1.15rem);margin-bottom:28px;max-width:600px}
+.btn{
+  display:inline-block;background:var(--accent);color:#fff;text-decoration:none;
+  padding:16px 32px;border-radius:999px;font-weight:700;min-height:48px;
+  transition:transform .3s ease-out,box-shadow .3s ease-out;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.btn-outline{background:transparent;border:2px solid #fff}
+
+/* ===== お困りごと ===== */
+.troubles{background:var(--white)}
+.trouble-list{list-style:none;display:grid;gap:12px;max-width:720px}
+.trouble-list li{
+  background:var(--bg);border-left:4px solid var(--accent);
+  padding:16px 20px;border-radius:0 var(--radius) var(--radius) 0;
+}
+.trouble-list li::before{content:"✓ ";color:var(--accent);font-weight:700}
+
+/* ===== カード ===== */
+.cards{display:grid;gap:20px;grid-template-columns:1fr}
+@media(min-width:769px){.cards{grid-template-columns:repeat(3,1fr)}}
+.card{
+  background:var(--white);border-radius:var(--radius);overflow:hidden;
+  box-shadow:var(--shadow);transition:transform .3s ease-out,box-shadow .3s ease-out;
+}
+.card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.card img{height:180px;object-fit:cover;width:100%}
+.card-body{padding:20px}
+.card-body p{color:var(--muted);font-size:.95rem}
+
+/* ===== 評価 ===== */
+.rating{background:var(--main);color:#fff;text-align:center}
+.rating .score{font-size:clamp(2.5rem,8vw,3.5rem);font-weight:700;line-height:1}
+.rating .stars{color:var(--accent);font-size:1.5rem;letter-spacing:4px;margin:8px 0}
+.rating .src{font-size:.85rem;opacity:.8}
+
+/* ===== 口コミ ===== */
+.voices{display:grid;gap:20px;grid-template-columns:1fr}
+@media(min-width:769px){.voices{grid-template-columns:repeat(2,1fr)}}
+.voice{
+  background:var(--white);padding:24px;border-radius:var(--radius);
+  box-shadow:var(--shadow);position:relative;
+}
+.voice::before{
+  content:"“";position:absolute;top:4px;left:16px;
+  font-size:3rem;color:var(--accent);opacity:.3;line-height:1;
+}
+.voice p{padding-top:16px;font-size:.95rem}
+.voice cite{display:block;margin-top:12px;font-size:.8rem;color:var(--muted);font-style:normal}
+
+/* ===== 情報テーブル ===== */
+.info-table{width:100%;border-collapse:collapse;background:var(--white);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+.info-table th,.info-table td{padding:16px 20px;text-align:left;border-bottom:1px solid var(--line);font-size:.95rem}
+.info-table th{background:var(--bg);width:32%;font-weight:700;white-space:nowrap}
+.info-table tr:last-child th,.info-table tr:last-child td{border-bottom:none}
+@media(max-width:520px){
+  .info-table th,.info-table td{display:block;width:100%}
+  .info-table th{border-bottom:none;padding-bottom:4px}
+}
+
+/* ===== CTA ===== */
+.cta{background:var(--main);color:#fff;text-align:center}
+.cta h2{color:#fff}
+.cta p{margin-bottom:28px;opacity:.92}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+/* ===== フッター ===== */
+footer{background:#1a1a1a;color:#bbb;padding:40px 0 28px;font-size:.9rem}
+footer .fnav{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:20px;list-style:none}
+footer a{color:#bbb;text-decoration:none}
+footer a:hover{color:#fff}
+.miseba-note{
+  margin-top:24px;padding-top:20px;border-top:1px solid #333;
+  font-size:.8rem;line-height:1.7;color:#888;
+}
+
+/* ===== スマホ固定CTAバー（CLAUDE.md §2-4） ===== */
+.mobile-bar{
+  position:fixed;left:0;right:0;bottom:0;z-index:100;display:flex;
+  background:var(--white);border-top:1px solid var(--line);
+  box-shadow:0 -2px 12px rgba(0,0,0,.1);
+}
+.mobile-bar a{
+  flex:1;display:flex;align-items:center;justify-content:center;gap:6px;
+  min-height:64px;text-decoration:none;font-weight:700;font-size:.95rem;
+}
+.mobile-bar .mb-tel{background:var(--main);color:#fff}
+.mobile-bar .mb-contact{background:var(--accent);color:#fff}
+@media(min-width:769px){.mobile-bar{display:none}}
+
+/* ===== スクロールアニメーション ===== */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .5s ease-out,transform .5s ease-out}
+.reveal.visible{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+  html{scroll-behavior:auto}
+  .btn:hover,.card:hover{transform:none}
+}
+.demo-flag{background:#101C26;color:#F6F2EA;padding:12px 20px;font-size:.84rem;
+  line-height:1.75;text-align:center;letter-spacing:.02em}
+.demo-flag strong{color:#E7D9BF}
+.demo-flag b{background:rgba(231,217,191,.18);padding:1px 7px;border-radius:3px;font-weight:700}
+.demo-flag a{color:#E7D9BF;font-weight:700;white-space:nowrap}
+</style>
+</head>
+<body>
+<div class="demo-flag">
+  <strong>これは見本です。</strong>実在するお店ではありません。
+  <b>会社名</b>・住所・電話番号は、実際のご依頼ではお店のものに置き換わります。
+  <a href="../../">ミセバのサイトへ戻る</a>
+</div>
+
+
+<header id="top">
+  <div class="wrap hd">
+    <a href="#top" class="logo">会社名</a>
+    <nav>
+      <ul>
+        <li><a href="#top">ホーム</a></li>
+        <li><a href="#services">対応内容</a></li>
+        <li><a href="#info">店舗情報</a></li>
+      </ul>
+    </nav>
+    <a href="tel:00000000000" class="hd-tel">📞 000-0000-0000</a>
+  </div>
+</header>
+
+<main>
+
+  <!-- ヒーロー -->
+  <section class="hero">
+    <div class="wrap">
+      <h1>雨漏り・屋根の傷み、<br>そのままにしていませんか</h1>
+      <p>小さな不具合のうちにご相談いただければ、費用も工期も抑えられます。まずはお気軽にお電話ください。</p>
+      <a href="tel:00000000000" class="btn">📞 000-0000-0000 に電話する</a>
+    </div>
+  </section>
+
+  <!-- お困りごと -->
+  <section class="troubles">
+    <div class="wrap reveal">
+      <h2>こんなお困りごとはありませんか</h2>
+      <p class="lead">ひとつでも当てはまる方は、お気軽にご相談ください。</p>
+      <ul class="trouble-list">
+        <li>天井にシミができてきた</li>
+        <li>屋根の瓦がずれている気がする</li>
+        <li>台風のあと、様子が気になる</li>
+        <li>そろそろ点検した方がいいか分からない</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 対応内容 -->
+  <section id="services">
+    <div class="wrap reveal">
+      <h2>対応内容</h2>
+      <p class="lead">〇〇県お店のある地域を中心に対応しております。</p>
+      <div class="cards">
+        <div class="card">
+          <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=800&q=80" alt="屋根の点検・診断のイメージ" loading="lazy">
+          <div class="card-body"><h3>屋根の点検・診断</h3><p>気になるところを実際に見て、状態をお伝えします。</p></div>
+        </div>
+        <div class="card">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80" alt="雨漏りの修理のイメージ" loading="lazy">
+          <div class="card-body"><h3>雨漏りの修理</h3><p>原因を特定したうえで、必要な範囲を修理します。</p></div>
+        </div>
+        <div class="card">
+          <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&q=80" alt="屋根の葺き替え・補修のイメージ" loading="lazy">
+          <div class="card-body"><h3>屋根の葺き替え・補修</h3><p>傷みが進んでいる場合の張り替えにも対応します。</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Google評価（★渡された数値のみ） -->
+  <section class="rating">
+    <div class="wrap reveal">
+      <h2>お客様からの評価</h2>
+      <div class="score">4.8</div>
+      <div class="stars">★★★★☆</div>
+      <p class="src">Googleマップの口コミ 15件の平均評価です</p>
+    </div>
+  </section>
+
+  <!-- 口コミ -->
+  <section>
+    <div class="wrap reveal">
+      <h2>お客様の声</h2>
+      <p class="lead">Googleマップに寄せられた口コミより抜粋しています。</p>
+      <div class="voices">
+        <div class="voice"><p>雨漏りをすぐに見に来てくれました。連絡してから来ていただくまでが早くて助かりました。</p><cite>Googleマップの口コミより</cite></div>
+        <div class="voice"><p>見積もりの内訳が分かりやすく、追加の請求もありませんでした。</p><cite>Googleマップの口コミより</cite></div>
+        <div class="voice"><p>作業のあと、屋根まわりの掃除まで丁寧にしてくださいました。</p><cite>Googleマップの口コミより</cite></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 店舗情報 -->
+  <section class="troubles" id="info">
+    <div class="wrap reveal">
+      <h2>店舗情報</h2>
+      <table class="info-table">
+        <tr><th>店名</th><td>会社名</td></tr>
+        <tr><th>所在地</th><td>〇〇県〇〇市〇〇町 1-2-3</td></tr>
+        <tr><th>電話番号</th><td><a href="tel:00000000000">000-0000-0000</a></td></tr>
+        <tr><th>営業時間</th><td>月〜金 8:00〜18:00<br>土 8:00〜17:00<br>日曜・祝日 定休</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="wrap reveal">
+      <h2>まずはお気軽にご相談ください</h2>
+      <p>お見積もりのご相談だけでも承ります。</p>
+      <div class="cta-btns">
+        <a href="tel:00000000000" class="btn">📞 電話する</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <ul class="fnav">
+      <li><a href="#top">ホーム</a></li>
+      <li><a href="#services">対応内容</a></li>
+      <li><a href="#info">店舗情報</a></li>
+    </ul>
+    <p>会社名<br>〇〇県〇〇市〇〇町 1-2-3<br>TEL: 000-0000-0000</p>
+    <p class="miseba-note">
+      このページは、Googleマップ上の公開情報をもとに<strong>ミセバ</strong>が作成した試作サイトです。
+      内容の追加・修正が可能です。不要な場合はご連絡ください。すぐに削除いたします。<br>
+      ご相談・削除のご依頼：<a href="https://lin.ee/VGyzGYv" style="color:#aaa">LINE</a>
+      ／ <a href="mailto:onikudaisuki1388@gmail.com" style="color:#aaa">onikudaisuki1388@gmail.com</a>
+    </p>
+  </div>
+</footer>
+
+<div class="mobile-bar">
+  <a href="tel:00000000000" class="mb-tel">📞 電話する</a>
+</div>
+
+<script>
+(function(){
+  var els = document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){
+    els.forEach(function(e){e.classList.add('visible')});
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){ en.target.classList.add('visible'); io.unobserve(en.target); }
+    });
+  },{threshold:.12});
+  els.forEach(function(e){io.observe(e)});
+})();
+</script>
+
+</body>
+</html>
