@@ -49,8 +49,7 @@ def build(slug=None):
     monthly = pricing.get("monthly_min", 5000)
     monitor = 30000
 
-    # 宛名（slug が渡されたときだけ）
-    addressee = ""
+    # 宛名。slug があれば印字、なければ手書き用の記入欄にする。
     if slug:
         info_path = ROOT / "prospects" / slug / "info.json"
         if not info_path.exists():
@@ -58,8 +57,18 @@ def build(slug=None):
         info = json.loads(info_path.read_text(encoding="utf-8"))
         addressee = (
             f'<p class="to">{esc(info.get("area", ""))}<br>'
-            f'<strong>{esc(info.get("name", ""))}</strong> 御中</p>'
+            f'<strong>{esc(info.get("name", ""))}</strong> 様</p>'
         )
+        guide_extra = "宛名は印刷されます。"
+    else:
+        # 手書き欄。投函する直前にお店の名前を書き込める。
+        addressee = (
+            '<div class="towrite">'
+            '<span class="wline"></span>'
+            '<span class="hon">様</span>'
+            "</div>"
+        )
+        guide_extra = "宛名は空欄です。投函する前に、お店の名前を手書きしてください。"
 
     site_qr = qr_svg(site_url, size_mm=34)
     line_qr = qr_svg(line_url, size_mm=22) if line_url else ""
@@ -96,6 +105,18 @@ def build(slug=None):
   }}
   .to {{ font-size: 10.5pt; line-height: 1.7; margin-bottom: 7mm; }}
   .to strong {{ font-size: 13pt; }}
+  /* 手書き用の宛名欄 */
+  .towrite {{
+    display: flex; align-items: flex-end; gap: 4mm;
+    width: 118mm; margin-bottom: 7mm;
+  }}
+  .towrite .wline {{
+    flex: 1; height: 12mm; border-bottom: 1.1px solid #101C26;
+  }}
+  .towrite .hon {{
+    font-family: "Noto Serif JP", serif; font-size: 15pt; font-weight: 700;
+    padding-bottom: 1.5mm; letter-spacing: .05em;
+  }}
   h1 {{
     font-family: "Noto Serif JP", serif; font-size: 25pt; line-height: 1.5;
     letter-spacing: .03em; margin-bottom: 5mm;
@@ -173,6 +194,7 @@ def build(slug=None):
 <div class="guide">
   <strong>印刷のしかた</strong><br>
   Ctrl+P →「用紙サイズ: A4」→「余白: なし」→「背景のグラフィック」にチェック。<br>
+  <strong>{guide_extra}</strong><br>
   この案内は印刷されません。投函するときは、事業所のポストに。
   「チラシお断り」の表示があるお宅には入れないでください。
 </div>
