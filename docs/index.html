@@ -4,137 +4,496 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ミセバ｜小さなお店のホームページ制作</title>
-<meta name="description" content="ミセバは、ホームページをお持ちでない小規模事業者さま向けに、まず試作のページをお作りしてからご提案する個人事業です。">
+<meta name="description" content="ホームページをまだお持ちでない小さなお店へ。ご依頼の前に試作のページをお作りして、実物を見ていただいてからご判断いただけます。初期費用50,000円・月額5,000円。">
+<meta property="og:title" content="ミセバ｜見てから、決めてください。">
+<meta property="og:description" content="ご依頼の前に試作のページをお作りします。気に入らなければ、そのままお断りいただけます。">
+<meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500;700&display=swap" rel="stylesheet">
 <style>
-:root{--main:#2D3E50;--accent:#E8A33D;--bg:#FBFAF8;--text:#1F2933;--muted:#5B6670;--line:#E6E2DC}
+:root{
+  --ink:#101C26;
+  --ink-soft:#2B3B47;
+  --paper:#FBF9F5;
+  --paper-2:#FFFFFF;
+  --brass:#B0803A;
+  --brass-soft:#E7D9BF;
+  --line:#E4DED4;
+  --muted:#6B7680;
+  --shadow:0 18px 50px -24px rgba(16,28,38,.35);
+  --serif:"Noto Serif JP",serif;
+  --sans:"Noto Sans JP",-apple-system,"Hiragino Sans",sans-serif;
+}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:"Noto Sans JP",-apple-system,"Hiragino Sans",sans-serif;color:var(--text);
-  background:var(--bg);line-height:1.9;font-size:16px}
-.wrap{max-width:760px;margin:0 auto;padding:0 24px}
-section{padding:56px 0}
-h1,h2{line-height:1.5;font-weight:700}
-h2{font-size:1.35rem;margin-bottom:16px;color:var(--main)}
-p{margin-bottom:16px}
-.hero{background:var(--main);color:#fff;padding:72px 0 64px}
-.hero .logo{font-size:2.2rem;letter-spacing:.12em;margin-bottom:8px}
-.hero .tag{color:var(--accent);font-weight:700;font-size:.9rem;letter-spacing:.2em;margin-bottom:24px}
-.hero p{opacity:.92;margin-bottom:0}
-.steps{list-style:none;counter-reset:s}
-.steps li{counter-increment:s;position:relative;padding-left:52px;margin-bottom:24px}
-.steps li::before{content:counter(s);position:absolute;left:0;top:2px;width:34px;height:34px;
-  background:var(--accent);color:#fff;border-radius:50%;display:flex;align-items:center;
-  justify-content:center;font-weight:700}
-.steps b{display:block;color:var(--main)}
-.price{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden}
-.price th,.price td{padding:14px 18px;text-align:left;border-bottom:1px solid var(--line);font-size:.95rem}
-.price th{background:#F4F1EC;width:45%;font-weight:700}
-.price tr:last-child th,.price tr:last-child td{border-bottom:none}
-.note{background:#fff;border-left:4px solid var(--accent);padding:20px 24px;border-radius:0 10px 10px 0;font-size:.93rem;color:var(--muted)}
-.mail{display:inline-block;background:var(--main);color:#fff;text-decoration:none;
-  padding:14px 28px;border-radius:8px;font-weight:700;word-break:break-all;
-  transition:transform .3s ease-out,box-shadow .3s ease-out}
-.mail:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.16)}
-.mail.line{background:#06C755}
-footer{background:#1a1a1a;color:#999;padding:32px 0;font-size:.85rem}
-footer p{margin-bottom:6px}
-@media(max-width:480px){.price th,.price td{padding:12px 12px;font-size:.88rem}
-  .price th{width:38%}}
-@media(min-width:769px){section{padding:72px 0}.hero .logo{font-size:2.8rem}}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);color:var(--ink);background:var(--paper);
+  line-height:1.95;font-size:16px;letter-spacing:.02em;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block}
+a{color:inherit}
+
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+.narrow{max-width:720px}
+section{padding:72px 0}
+
+/* ---------- 見出し ---------- */
+.label{
+  font-size:.7rem;letter-spacing:.34em;font-weight:700;color:var(--brass);
+  display:flex;align-items:center;gap:14px;margin-bottom:20px;
+}
+.label::after{content:"";flex:1;height:1px;background:var(--line)}
+h2{
+  font-family:var(--serif);font-weight:700;line-height:1.55;
+  font-size:clamp(1.5rem,3.6vw,2.1rem);margin-bottom:24px;letter-spacing:.03em;
+}
+h3{font-size:1.02rem;font-weight:700;margin-bottom:6px;letter-spacing:.03em}
+p{margin-bottom:18px}
+p:last-child{margin-bottom:0}
+.lead{color:var(--ink-soft);font-size:1.02rem}
+.small{font-size:.86rem;color:var(--muted);line-height:1.85}
+
+/* ---------- ヘッダー ---------- */
+.top{
+  position:sticky;top:0;z-index:50;background:rgba(251,249,245,.88);
+  backdrop-filter:saturate(160%) blur(12px);border-bottom:1px solid var(--line);
+}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
+.mark{font-family:var(--serif);font-weight:700;font-size:1.16rem;letter-spacing:.22em;text-decoration:none}
+.top nav{display:none;gap:30px;font-size:.83rem;letter-spacing:.1em}
+.top nav a{text-decoration:none;color:var(--ink-soft);transition:color .3s ease-out}
+.top nav a:hover{color:var(--brass)}
+@media(min-width:820px){.top nav{display:flex}}
+
+/* ---------- ヒーロー ---------- */
+.hero{
+  background:var(--ink);color:#F6F2EA;padding:96px 0 88px;
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(1100px 460px at 82% -12%,rgba(176,128,58,.30),transparent 62%),
+    radial-gradient(760px 380px at 6% 108%,rgba(176,128,58,.12),transparent 60%);
+}
+.hero .wrap{position:relative;z-index:1}
+.hero .eyebrow{
+  font-size:.68rem;letter-spacing:.42em;color:var(--brass-soft);
+  margin-bottom:30px;font-weight:700;
+}
+.hero h1{
+  font-family:var(--serif);font-weight:700;letter-spacing:.05em;
+  font-size:clamp(2.1rem,7vw,3.6rem);line-height:1.42;margin-bottom:28px;
+}
+.hero h1 .accent{color:var(--brass-soft)}
+.hero p{max-width:33em;color:rgba(246,242,234,.86);font-size:1.02rem}
+.hero .rule{width:56px;height:2px;background:var(--brass);margin:0 0 30px}
+
+/* ---------- ボタン ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  min-height:52px;padding:14px 30px;border-radius:6px;text-decoration:none;
+  font-weight:700;font-size:.95rem;letter-spacing:.06em;border:1px solid transparent;
+  transition:transform .3s ease-out,box-shadow .3s ease-out,background .3s ease-out;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.btn-line{background:#06C755;color:#fff}
+.btn-ghost{border-color:rgba(246,242,234,.36);color:#F6F2EA}
+.btn-ghost:hover{background:rgba(246,242,234,.09)}
+.btn-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px}
+
+/* ---------- 引用 ---------- */
+.pull{
+  font-family:var(--serif);font-weight:500;font-size:clamp(1.2rem,3.2vw,1.6rem);
+  line-height:1.85;letter-spacing:.04em;color:var(--ink);
+  border-left:3px solid var(--brass);padding:6px 0 6px 26px;margin:8px 0 30px;
+}
+
+/* ---------- 進め方 ---------- */
+.steps{list-style:none;counter-reset:s;margin-top:8px}
+.steps li{
+  counter-increment:s;position:relative;padding:0 0 30px 62px;
+}
+.steps li::before{
+  content:"0" counter(s);position:absolute;left:0;top:-2px;
+  font-family:var(--serif);font-weight:700;font-size:1.16rem;color:var(--brass);
+  letter-spacing:.06em;
+}
+.steps li::after{
+  content:"";position:absolute;left:17px;top:26px;bottom:2px;width:1px;background:var(--line);
+}
+.steps li:last-child{padding-bottom:0}
+.steps li:last-child::after{display:none}
+.steps p{color:var(--ink-soft);font-size:.95rem;margin:0}
+
+/* ---------- 料金 ---------- */
+.plans{display:grid;gap:18px;margin-bottom:16px}
+@media(min-width:680px){.plans{grid-template-columns:1fr 1fr}}
+.plan{
+  background:var(--paper-2);border:1px solid var(--line);border-radius:12px;
+  padding:30px 28px;
+}
+.plan .cap{font-size:.78rem;letter-spacing:.2em;color:var(--muted);font-weight:700;margin-bottom:12px}
+.plan .amt{font-family:var(--serif);font-weight:700;font-size:2.3rem;line-height:1.2;letter-spacing:.02em}
+.plan .amt small{font-size:.98rem;font-weight:700;margin-left:3px}
+.plan .desc{font-size:.88rem;color:var(--muted);margin-top:12px;line-height:1.8}
+.monitor{
+  background:var(--ink);color:#F6F2EA;border-color:var(--ink);
+}
+.monitor .cap{color:var(--brass-soft)}
+.monitor .desc{color:rgba(246,242,234,.76)}
+.monitor .amt .was{
+  font-size:1.06rem;color:rgba(246,242,234,.5);text-decoration:line-through;
+  margin-right:12px;font-weight:500;
+}
+
+/* ---------- 比較表 ---------- */
+.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:8px 0 18px;
+  border:1px solid var(--line);border-radius:12px;background:var(--paper-2)}
+table.cmp{width:100%;border-collapse:collapse;min-width:660px;font-size:.9rem}
+table.cmp th,table.cmp td{padding:15px 16px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+table.cmp thead th{
+  font-size:.78rem;letter-spacing:.12em;color:var(--muted);font-weight:700;
+  background:#F4F0E9;white-space:nowrap;
+}
+table.cmp tbody th{font-weight:700;white-space:nowrap;color:var(--ink-soft);width:150px}
+table.cmp tr:last-child th,table.cmp tr:last-child td{border-bottom:none}
+table.cmp .own{background:rgba(176,128,58,.09);font-weight:700;color:var(--ink)}
+table.cmp thead .own{background:rgba(176,128,58,.2);color:var(--ink)}
+.tag-best{
+  display:inline-block;font-size:.68rem;letter-spacing:.1em;background:var(--brass);
+  color:#fff;border-radius:3px;padding:2px 7px;margin-left:7px;vertical-align:1px;
+}
+.scroll-hint{font-size:.78rem;color:var(--muted);margin:-6px 0 18px}
+@media(min-width:760px){.scroll-hint{display:none}}
+
+/* ---------- 注記ボックス ---------- */
+.note{
+  background:var(--paper-2);border:1px solid var(--line);border-left:3px solid var(--brass);
+  border-radius:0 10px 10px 0;padding:24px 26px;
+}
+.note.plain{border-left-color:var(--line)}
+
+/* ---------- 事業者情報テーブル ---------- */
+table.info{width:100%;border-collapse:collapse;background:var(--paper-2);
+  border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:.93rem}
+table.info th,table.info td{padding:15px 18px;text-align:left;border-bottom:1px solid var(--line)}
+table.info th{background:#F4F0E9;width:38%;font-weight:700;white-space:nowrap;color:var(--ink-soft)}
+table.info tr:last-child th,table.info tr:last-child td{border-bottom:none}
+@media(max-width:520px){
+  table.info th,table.info td{display:block;width:100%;border-bottom:none;padding:12px 16px}
+  table.info th{padding-bottom:2px;background:transparent;color:var(--brass);font-size:.78rem;letter-spacing:.1em}
+  table.info tr{display:block;border-bottom:1px solid var(--line)}
+  table.info tr:last-child{border-bottom:none}
+}
+
+/* ---------- CTA ---------- */
+.cta{background:var(--ink);color:#F6F2EA}
+.cta h2{color:#F6F2EA}
+.cta p{color:rgba(246,242,234,.84)}
+.cta .label{color:var(--brass-soft)}
+.cta .label::after{background:rgba(246,242,234,.22)}
+
+/* ---------- フッター ---------- */
+footer{background:#0A141B;color:#8C979F;padding:44px 0;font-size:.84rem;line-height:1.9}
+footer a{color:#B6C0C7}
+footer .mark{color:#E8E2D6;font-size:1.05rem}
+footer .fnote{margin-top:18px;font-size:.78rem;color:#69747C}
+
+/* ---------- 交互背景 ---------- */
+.alt{background:var(--paper-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+
+/* ---------- 出現アニメーション ---------- */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease-out,transform .6s ease-out}
+.reveal.visible{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .reveal{opacity:1;transform:none;transition:none}
+  .btn:hover{transform:none}
+}
+@media(min-width:769px){section{padding:96px 0}}
 </style>
 </head>
 <body>
 
-<header class="hero">
+<div class="top">
   <div class="wrap">
-    <div class="tag">MISEBA</div>
-    <h1 class="logo">ミセバ</h1>
-    <p>ホームページをまだお持ちでない小さなお店に、<br>
-       まず「見てもらえる形」をお作りしています。</p>
+    <a href="#top" class="mark">ミセバ</a>
+    <nav>
+      <a href="#how">進め方</a>
+      <a href="#price">費用</a>
+      <a href="#why">この価格の理由</a>
+      <a href="#about">ミセバについて</a>
+      <a href="#contact">相談する</a>
+    </nav>
+  </div>
+</div>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="eyebrow">MISEBA</div>
+    <div class="rule"></div>
+    <h1>見てから、<br><span class="accent">決めてください。</span></h1>
+    <p>ホームページをまだお持ちでない小さなお店へ。
+       ご依頼をいただく前に、そのお店のための試作ページをお作りしてお見せします。
+       気に入らなければ、そのままお断りいただいて構いません。費用はかかりません。</p>
+    <div class="btn-row">
+      <a href="https://lin.ee/VGyzGYv" class="btn btn-line">LINEで相談する</a>
+      <a href="#price" class="btn btn-ghost">費用を見る</a>
+    </div>
   </div>
 </header>
 
 <main>
+
+  <!-- ============ 01 ============ -->
   <section>
-    <div class="wrap">
-      <h2>先に作って、見ていただいてから</h2>
-      <p>ホームページは「頼んでみないと、どんなものができるか分からない」のが不安だと思います。
-         ミセバでは、ご依頼をいただく前に試作のページをお作りして、実物を見ていただいてから
-         ご判断いただく形をとっています。</p>
-      <p>気に入らなければ、そのまま断っていただいて構いません。費用はかかりません。</p>
+    <div class="wrap narrow reveal">
+      <div class="label">01 &nbsp;&nbsp;ABOUT</div>
+      <h2>「頼んでみないと、どんなものができるか分からない」</h2>
+      <div class="pull">それがいちばん不安なところだと思います。<br>だから、先に作ります。</div>
+      <p class="lead">ホームページを作ろうと思っても、いくらかかるのか、どんなものが出てくるのか、
+        本当に必要なのか。分からないことが多すぎて、後回しになりがちです。</p>
+      <p class="lead">ミセバでは、ご依頼をいただく前に試作のページをお作りします。
+        実物を見て、必要かどうかを判断してください。
+        見たうえで「いらない」と思われたら、それで終わりです。
+        こちらから何度もご連絡することはありません。</p>
     </div>
   </section>
 
-  <section style="background:#fff">
-    <div class="wrap">
+  <!-- ============ 02 ============ -->
+  <section class="alt" id="how">
+    <div class="wrap narrow reveal">
+      <div class="label">02 &nbsp;&nbsp;FLOW</div>
       <h2>進め方</h2>
       <ol class="steps">
-        <li><b>試作ページをお送りします</b>公開されている情報をもとに、1枚のページをお作りします。</li>
-        <li><b>見ていただきます</b>文章や写真、載せたい内容のご希望をお聞かせください。</li>
-        <li><b>修正してお渡しします</b>ご希望に合わせて直したうえで、正式に公開します。</li>
-        <li><b>公開後もお手伝いします</b>月1回の更新や、口コミへの返信などを承ります。</li>
+        <li>
+          <h3>試作ページをお見せします</h3>
+          <p>公開されている情報をもとに、1枚のページをお作りしてお届けします。
+             この時点では費用は一切かかりません。</p>
+        </li>
+        <li>
+          <h3>見ていただきます</h3>
+          <p>載せたい写真や文章、直したいところをお聞かせください。
+             「ここは違う」「この写真を使いたい」だけで大丈夫です。</p>
+        </li>
+        <li>
+          <h3>直して、公開します</h3>
+          <p>ご希望に合わせて作り直したうえで、正式に公開します。
+             修正は2回まで費用に含まれています。</p>
+        </li>
+        <li>
+          <h3>公開後もお手伝いします</h3>
+          <p>月1回程度の内容の更新、Googleマップの口コミへの返信のお手伝いなどを承ります。</p>
+        </li>
       </ol>
     </div>
   </section>
 
-  <section>
-    <div class="wrap">
-      <h2>費用の目安</h2>
-      <table class="price">
-        <tr><th>最初にお作りする費用</th><td>50,000円（修正2回まで）</td></tr>
-        <tr><th>公開後の月額</th><td>5,000円</td></tr>
-      </table>
-      <p style="font-size:.9rem;color:var(--muted);margin-top:12px">
-        月額には、ページの公開の維持、月1回程度の内容の更新、
-        Googleマップの口コミへの返信のお手伝いが含まれます。
-        内容によって変わりますので、まずはご相談ください。</p>
+  <!-- ============ 03 ============ -->
+  <section id="price">
+    <div class="wrap reveal">
+      <div class="label">03 &nbsp;&nbsp;PRICE</div>
+      <h2>費用</h2>
+
+      <div class="plans">
+        <div class="plan">
+          <div class="cap">はじめにかかる費用</div>
+          <div class="amt">50,000<small>円</small></div>
+          <div class="desc">1ページの制作費です。修正2回まで含みます。
+            お支払いは公開後、請求書をお送りしてから銀行振込でお願いしています。</div>
+        </div>
+        <div class="plan">
+          <div class="cap">公開後の月額</div>
+          <div class="amt">5,000<small>円</small></div>
+          <div class="desc">ページの公開の維持、月1回程度の内容の更新、
+            Googleマップの口コミへの返信のお手伝いが含まれます。
+            1ヶ月前にご連絡いただければ、いつでもやめられます。</div>
+        </div>
+      </div>
+
+      <div class="plan monitor" style="margin-bottom:34px">
+        <div class="cap">はじめの3件のみ</div>
+        <div class="amt"><span class="was">50,000円</span>30,000<small>円</small></div>
+        <div class="desc">これから実績を作っていく段階のため、はじめの3件のお店に限り、
+          制作費を30,000円でお引き受けしています。
+          <strong>「ミセバの実績として紹介させていただくこと」が条件</strong>です。
+          月額は同じく5,000円です。</div>
+      </div>
+
+      <h3 style="font-family:var(--serif);font-size:1.16rem;margin-bottom:14px">他に頼んだ場合との比較</h3>
+      <p class="scroll-hint">← 横にスクロールできます</p>
+      <div class="tablewrap">
+        <table class="cmp">
+          <thead>
+            <tr>
+              <th></th>
+              <th class="own">ミセバ</th>
+              <th>制作会社に頼む</th>
+              <th>フリーランスに頼む</th>
+              <th>自分で作る</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>はじめの費用</th>
+              <td class="own">50,000円<span class="tag-best">最安級</span></td>
+              <td>15〜65万円</td>
+              <td>30万円ほど</td>
+              <td>0〜数万円</td>
+            </tr>
+            <tr>
+              <th>月額</th>
+              <td class="own">5,000円<br><span class="small">更新・口コミ返信込み</span></td>
+              <td>1.3〜2.2万円</td>
+              <td>別途相談</td>
+              <td>1,500〜3,750円<br><span class="small">サーバー代など</span></td>
+            </tr>
+            <tr>
+              <th>5年間の合計</th>
+              <td class="own">35万円</td>
+              <td>160万円ほど</td>
+              <td>45万円ほど</td>
+              <td>12〜16万円</td>
+            </tr>
+            <tr>
+              <th>かかる手間</th>
+              <td class="own">写真と文章の<br>確認だけ</td>
+              <td>打ち合わせ数回</td>
+              <td>打ち合わせ数回</td>
+              <td>全部ご自分で</td>
+            </tr>
+            <tr>
+              <th>見てから<br>決められるか</th>
+              <td class="own">できます<br><span class="small">試作を先にお見せします</span></td>
+              <td>契約してから制作</td>
+              <td>契約してから制作</td>
+              <td>—</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="note">
+        <p style="margin-bottom:10px"><strong>正直に書いておきます。</strong></p>
+        <p class="small" style="margin-bottom:10px">
+          ご自分で作れる方や、月額の安いサービスを使える方は、そちらのほうが総額は安く済みます。
+          ミセバが向いているのは、<strong>作る時間がない方</strong>、
+          <strong>何を書けばいいか分からない方</strong>です。
+          制作会社に頼んだ場合と比べれば費用はかなり抑えられますが、
+          「どこよりも安い」と申し上げるつもりはありません。</p>
+        <p class="small" style="margin-bottom:0">
+          月額が安いサービスの中には、サーバー代だけで更新作業が含まれないものもあります。
+          比較されるときは、金額だけでなく<strong>作業の中身</strong>もお確かめください。
+          ミセバの月額に何が含まれるかは、上に書いたとおりです。</p>
+      </div>
+      <p class="small" style="margin-top:14px">
+        ※ 比較欄の金額は、2026年8月時点で公開されている複数の制作会社の費用相場の記事を参考にした目安です。
+        依頼先やページ数によって変わります。ミセバ以外の金額は、こちらが保証するものではありません。</p>
     </div>
   </section>
 
-  <section style="background:#fff">
-    <div class="wrap">
+  <!-- ============ 04 ============ -->
+  <section class="alt" id="why">
+    <div class="wrap narrow reveal">
+      <div class="label">04 &nbsp;&nbsp;REASON</div>
+      <h2>なぜこの価格でできるのか</h2>
+      <p class="lead">安すぎると、かえって不安だと思います。理由は3つあります。</p>
+      <ol class="steps" style="margin-top:24px">
+        <li>
+          <h3>個人でやっているから</h3>
+          <p>事務所も、営業の人も、間に入る人もいません。
+             やりとりは最初から最後まで直接です。そのぶん費用がかかりません。</p>
+        </li>
+        <li>
+          <h3>1ページに絞っているから</h3>
+          <p>小さなお店に必要なことは、たいてい1ページに収まります。
+             何ページも作らないぶん、早く、安くできます。
+             必要になったら、あとから増やせます。</p>
+        </li>
+        <li>
+          <h3>AIを使って下書きを作っているから</h3>
+          <p>デザインの骨組みや文章の下書きにAIを使っています。
+             そのぶん時間が短く済みます。ただし<strong>最後は必ず人が確認して直しています</strong>。
+             お店の情報を勝手に作ったり、事実でないことを書いたりはしません。</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ 05 ============ -->
+  <section id="about">
+    <div class="wrap narrow reveal">
+      <div class="label">05 &nbsp;&nbsp;INFORMATION</div>
       <h2>ミセバについて</h2>
-      <div class="note">
-        <p style="margin-bottom:8px"><b>ミセバは個人で運営しています。</b></p>
-        <p style="margin-bottom:0">法人ではありませんので、大きな会社のような体制はありません。
-        そのぶん、直接やりとりができて、小さなご相談にも対応しやすいのが取り柄です。
-        試作ページはAIを使って効率よくお作りしているため、この価格でご提供できています。</p>
+      <div class="note plain" style="margin-bottom:24px">
+        <p style="margin-bottom:8px"><strong>ミセバは個人で運営しています。</strong></p>
+        <p style="margin-bottom:0" class="small">法人ではありませんので、大きな会社のような体制はありません。
+          そのぶん、直接やりとりができて、小さなご相談にも対応しやすいのが取り柄です。
+          大きな案件や、急ぎの案件はお引き受けできないことがあります。</p>
       </div>
-      <table class="price" style="margin-top:20px">
+      <table class="info">
         <tr><th>屋号</th><td>ミセバ（個人事業）</td></tr>
         <tr><th>運営者</th><td>saku</td></tr>
         <tr><th>連絡先</th><td><a href="mailto:onikudaisuki1388@gmail.com">onikudaisuki1388@gmail.com</a></td></tr>
-        <tr><th>所在地・電話</th><td>ご請求により遅滞なくお知らせします</td></tr>
-        <tr><th>対象</th><td><b>本サービスは事業者さま向けのサービスです</b></td></tr>
-        <tr><th>お支払い</th><td>銀行振込（納品後・請求書発行）</td></tr>
-        <tr><th>キャンセル</th><td>着手前はいつでも無料。着手後は進行分のみご請求します</td></tr>
+        <tr><th>所在地・電話番号</th><td>ご請求により遅滞なくお知らせします</td></tr>
+        <tr><th>対象</th><td><strong>本サービスは事業者さま向けのサービスです</strong></td></tr>
+        <tr><th>お支払い</th><td>銀行振込（公開後・請求書を発行します）</td></tr>
+        <tr><th>修正</th><td>2回まで制作費に含みます</td></tr>
+        <tr><th>解約</th><td>1ヶ月前にご連絡いただければ、いつでも解約できます</td></tr>
+        <tr><th>キャンセル</th><td>着手前はいつでも無料。着手後は進行した分のみご請求します</td></tr>
       </table>
     </div>
   </section>
 
-  <section>
-    <div class="wrap">
-      <h2>お問い合わせ</h2>
-      <p>ご相談・ご質問はLINEかメールでお受けしています。
-         「うちの店だとどんな感じになる？」といったご相談だけでも構いません。</p>
-      <p style="margin-bottom:14px">
-        <a href="https://lin.ee/VGyzGYv" class="mail line">LINEで相談する</a></p>
-      <p style="margin-bottom:24px">
-        <a href="mailto:onikudaisuki1388@gmail.com" class="mail">onikudaisuki1388@gmail.com</a></p>
-      <p style="font-size:.9rem;color:var(--muted);margin-bottom:0">
+  <!-- ============ 06 ============ -->
+  <section class="cta" id="contact">
+    <div class="wrap narrow reveal">
+      <div class="label">06 &nbsp;&nbsp;CONTACT</div>
+      <h2>まずは聞いてみるだけでも</h2>
+      <p>「うちの店だとどんな感じになる？」「そもそも必要なの？」といったご相談だけでも構いません。
+         売り込みのご連絡を重ねることはありません。</p>
+      <div class="btn-row">
+        <a href="https://lin.ee/VGyzGYv" class="btn btn-line">LINEで相談する</a>
+        <a href="mailto:onikudaisuki1388@gmail.com" class="btn btn-ghost">メールで相談する</a>
+      </div>
+      <p class="small" style="margin-top:26px;color:rgba(246,242,234,.6)">
         お返事は数日いただくことがあります。あらかじめご了承ください。</p>
     </div>
   </section>
+
 </main>
 
 <footer>
   <div class="wrap">
-    <p><strong style="color:#ddd">ミセバ</strong>（個人事業）</p>
-    <p><a href="https://lin.ee/VGyzGYv" style="color:#bbb">LINEで相談する</a>　/　<a href="mailto:onikudaisuki1388@gmail.com" style="color:#bbb">onikudaisuki1388@gmail.com</a></p>
+    <p><strong class="mark">ミセバ</strong>　（個人事業）</p>
+    <p>
+      <a href="https://lin.ee/VGyzGYv">LINEで相談する</a>
+      　/
+      <a href="mailto:onikudaisuki1388@gmail.com">onikudaisuki1388@gmail.com</a>
+    </p>
+    <p class="fnote">本サービスは事業者さま向けのサービスです。<br>
+      所在地・電話番号はご請求により遅滞なくお知らせします。</p>
   </div>
 </footer>
+
+<script>
+(function(){
+  var els = document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){
+    for(var i=0;i<els.length;i++){ els[i].classList.add('visible'); }
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){ en.target.classList.add('visible'); io.unobserve(en.target); }
+    });
+  },{threshold:.1});
+  els.forEach(function(e){ io.observe(e); });
+})();
+</script>
 
 </body>
 </html>
