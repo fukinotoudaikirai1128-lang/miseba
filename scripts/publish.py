@@ -111,18 +111,21 @@ def main(slug: str):
     if url:
         print(f"公開URL: {url}")
     print()
-    print("=== 公開のしかた（Netlify） ===")
-    print("  1. https://app.netlify.com/drop を開く")
-    print(f"  2. {ROOT / 'docs'} フォルダごとドラッグ＆ドロップする")
-    print("  3. 発行されたURLを config.json の publish.site_url に入れる")
+    print("=== 公開のしかた ===")
+    print("  git add docs/")
+    print(f'  git commit -m "add preview: {public_slug}"')
+    print("  git push")
     print()
-    print("  ※ GitHub には push しません。docs/p/ は .gitignore 済みです。")
-    print("     公開リポジトリのファイルページからは店名が読めてしまうため、")
-    print("     試作サイトを GitHub に置くのはやめました（LEGAL.md 2）。")
+    print("  GitHub Desktop からでも構いません。反映まで1〜2分かかります。")
+    print()
+    print("  ※ prospects/ は .gitignore 済みなので push されません。")
+    print("     `git add .` は使わず、docs/ だけを add してください。")
+    print()
+    print("  ★確認★ 公開してよいのは、相手から「作ってほしい」と")
+    print("     言われたお店だけです。同意なく他店のページを公開しないこと。")
     if not site_url:
         print()
         print("  ⚠️  config.json の publish.site_url が空です。")
-        print("     Netlify で発行されたURLを入れるまで、はがき・チラシのQRは作れません。")
 
 
 if __name__ == "__main__":

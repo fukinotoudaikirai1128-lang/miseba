@@ -9,6 +9,5 @@ __pycache__/
 .env
 *.log
 
-# 試作サイトの公開ファイル。店名が入るので GitHub には置かない。
-# 公開は Netlify へのアップロードで行う（GitHub Pages は使わない）。
-docs/p/
+# チラシの出力先（宛名が入ることがある）
+out/

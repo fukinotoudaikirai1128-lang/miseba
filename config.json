@@ -29,11 +29,11 @@
     "max_new_sites": 3
   },
   "publish": {
-    "provider": "netlify",
-    "site_url": "",
+    "provider": "github_pages",
+    "site_url": "https://fukinotoudaikirai1128-lang.github.io/miseba",
     "base_path": "docs/p",
     "slug_length": 20,
-    "_comment": "GitHub Pages は使わない。公開リポジトリのファイルページ(/blob/)は検索避けされておらず、店名が読めてしまうため（LEGAL.md 2 の『URLは推測できないこと』が破れる）。Netlify に docs フォルダをアップロードして公開する。site_url には発行されたURL（例 https://miseba.netlify.app）を入れる。"
+    "_comment": "公開するのは『ミセバのサイト』と『依頼を受けたお客さまのサイト』だけ。相手の同意なく他店のページを公開しないので、限定公開の必要はない。site_url は GitHub Pages の公開URL。"
   },
   "outreach": {
     "channel": "postal",
