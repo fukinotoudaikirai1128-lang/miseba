@@ -8,10 +8,15 @@
     "line_url": "https://lin.ee/VGyzGYv",
     "line_id": "@337wgybk"
   },
-
   "search": {
     "area": "長野県長野市桜枝町付近",
-    "keywords": ["屋根修理", "水道業者", "工務店", "電気工事", "外壁塗装"],
+    "keywords": [
+      "屋根修理",
+      "水道業者",
+      "工務店",
+      "電気工事",
+      "外壁塗装"
+    ],
     "max_per_run": 10,
     "filter": {
       "require_no_website": true,
@@ -20,27 +25,21 @@
       "max_review_count": 30
     }
   },
-
   "daily": {
     "max_new_sites": 3
   },
-
   "publish": {
     "provider": "netlify",
     "site_url": "",
     "base_path": "docs/p",
     "slug_length": 20,
-
     "_comment": "GitHub Pages は使わない。公開リポジトリのファイルページ(/blob/)は検索避けされておらず、店名が読めてしまうため（LEGAL.md 2 の『URLは推測できないこと』が破れる）。Netlify に docs フォルダをアップロードして公開する。site_url には発行されたURL（例 https://miseba.netlify.app）を入れる。"
   },
-
   "outreach": {
     "channel": "postal",
     "daily_send_cap": 10,
     "require_user_confirmation": false,
-
     "_comment": "channel: postal（はがき・本命／85円）| phone（電話・0円）| draft_only（書き出すだけ）。mail と google_message は使用禁止 — brand/LEGAL.md §1 を参照。",
-
     "excluded_business_types": [
       "株式会社・有限会社・合同会社が店名に付く店",
       "全国チェーン・フランチャイズ加盟店",
@@ -48,7 +47,6 @@
       "医療機関（病院・クリニック・歯科）",
       "接骨院・整骨院・鍼灸院・薬局"
     ],
-
     "pricing": {
       "setup_min": 50000,
       "setup_max": 50000,
