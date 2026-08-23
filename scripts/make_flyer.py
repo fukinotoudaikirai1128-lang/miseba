@@ -138,8 +138,11 @@ def build(slug=None):
     padding: 4mm 3mm; margin-bottom: 4mm;
   }}
   .qrbox .cap {{ font-size: 8.5pt; font-weight: 700; margin-bottom: 2.5mm; line-height: 1.5; }}
+  .qrbox .how {{
+    font-size: 7.5pt; font-weight: 700; color: #B0803A; margin-top: 2.5mm; line-height: 1.55;
+  }}
   .qrbox .url {{
-    font-size: 7pt; color: #6B7680; margin-top: 2.5mm; word-break: break-all; line-height: 1.5;
+    font-size: 6.5pt; color: #8a929a; margin-top: 2mm; word-break: break-all; line-height: 1.5;
   }}
   .lineqr {{
     background: #06C755; border-radius: 3mm; padding: 3mm; color: #fff;
@@ -240,6 +243,7 @@ def build(slug=None):
       <div class="qrbox">
         <div class="cap">どんなものが作れるか<br>ここで見られます</div>
         {site_qr}
+        <div class="how">スマホのカメラを<br>向けるだけで開きます</div>
         <div class="url">{esc(site_url)}</div>
       </div>
       {line_block}
