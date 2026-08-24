@@ -70,6 +70,13 @@ def build(slug=None):
         )
         guide_extra = "宛名は空欄です。投函する前に、お店の名前を手書きしてください。"
 
+    # 紙に載せる表記。https:// は省き、区切りの良いところでだけ改行させる。
+    # （break-all だとドメインの途中で切れて、印刷物では不格好になる）
+    url_display = esc(site_url.replace("https://", "").replace("http://", ""))
+    if "/" in url_display:
+        host, _, path = url_display.partition("/")
+        url_display = f"{host}<wbr>/{path}"
+
     site_qr = qr_svg(site_url, size_mm=34)
     line_qr = qr_svg(line_url, size_mm=22) if line_url else ""
     line_block = (
@@ -142,7 +149,8 @@ def build(slug=None):
     font-size: 7.5pt; font-weight: 700; color: #B0803A; margin-top: 2.5mm; line-height: 1.55;
   }}
   .qrbox .url {{
-    font-size: 6.5pt; color: #8a929a; margin-top: 2mm; word-break: break-all; line-height: 1.5;
+    font-size: 6.5pt; color: #8a929a; margin-top: 2mm; line-height: 1.5;
+    word-break: normal; overflow-wrap: break-word;
   }}
   .lineqr {{
     background: #06C755; border-radius: 3mm; padding: 3mm; color: #fff;
@@ -244,7 +252,7 @@ def build(slug=None):
         <div class="cap">どんなものが作れるか<br>ここで見られます</div>
         {site_qr}
         <div class="how">スマホのカメラを<br>向けるだけで開きます</div>
-        <div class="url">{esc(site_url)}</div>
+        <div class="url">{url_display}</div>
       </div>
       {line_block}
     </div>
