@@ -2,6 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
+<script>document.documentElement.className+=" js";</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>【見本】会社名｜〇〇県〇〇市のリラクゼーションサロン</title>
@@ -171,12 +172,66 @@ footer a:hover{color:#fff}
 @media(min-width:769px){.mobile-bar{display:none}}
 
 /* ===== スクロールアニメーション ===== */
-.reveal{opacity:0;transform:translateY(24px);transition:opacity .5s ease-out,transform .5s ease-out}
-.reveal.visible{opacity:1;transform:none}
+.js .reveal{opacity:0;transform:translateY(24px);transition:opacity .5s ease-out,transform .5s ease-out}
+.js .reveal.visible{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){
   .reveal{opacity:1;transform:none;transition:none}
   html{scroll-behavior:auto}
   .btn:hover,.card:hover{transform:none}
+}
+
+/* ---------- 動き ---------- */
+/* 背景画像は .hero::before にあるので、そちらをゆっくり寄せる */
+.hero{overflow:hidden}
+.hero::before{
+  transform:scale(1.08);
+  animation:heroZoom 20s ease-out forwards;
+  transform-origin:50% 45%;
+}
+@keyframes heroZoom{to{transform:scale(1)}}
+
+/* 見出しと本文が順に現れる */
+.js .reveal>*{opacity:0;transform:translateY(14px);
+  transition:opacity .6s ease-out,transform .6s ease-out}
+.js .reveal.visible>*{opacity:1;transform:none}
+.js .reveal.visible>*:nth-child(1){transition-delay:.04s}
+.js .reveal.visible>*:nth-child(2){transition-delay:.12s}
+.js .reveal.visible>*:nth-child(3){transition-delay:.20s}
+.js .reveal.visible>*:nth-child(4){transition-delay:.28s}
+
+/* お困りごとが1つずつ */
+.js .trouble-list li{opacity:0;transform:translateX(-8px);
+  transition:opacity .5s ease-out,transform .5s ease-out}
+.js .visible .trouble-list li{opacity:1;transform:none}
+.js .visible .trouble-list li:nth-child(1){transition-delay:.10s}
+.js .visible .trouble-list li:nth-child(2){transition-delay:.20s}
+.js .visible .trouble-list li:nth-child(3){transition-delay:.30s}
+.js .visible .trouble-list li:nth-child(4){transition-delay:.40s}
+
+/* カードが少し遅れて浮かぶ */
+.js .cards .card{opacity:0;transform:translateY(20px);
+  transition:opacity .65s ease-out,transform .65s ease-out,box-shadow .3s ease-out}
+.js .visible .cards .card:nth-child(1){opacity:1;transform:none;transition-delay:.08s}
+.js .visible .cards .card:nth-child(2){opacity:1;transform:none;transition-delay:.20s}
+.js .visible .cards .card:nth-child(3){opacity:1;transform:none;transition-delay:.32s}
+.cards .card img{transition:transform .7s ease-out}
+.cards .card:hover img{transform:scale(1.05)}
+
+/* 評価の星がふわっと */
+.js .rating .score,.js .rating .stars{opacity:0;transform:scale(.94);
+  transition:opacity .7s ease-out,transform .7s ease-out}
+.js .visible .rating .score{opacity:1;transform:none;transition-delay:.08s}
+.js .visible .rating .stars{opacity:1;transform:none;transition-delay:.24s}
+
+/* スマホの固定バーはスクロールしてから出す */
+.js .mobile-bar{transform:translateY(100%);transition:transform .45s cubic-bezier(.22,.68,.24,1)}
+.js .mobile-bar.show{transform:none}
+
+@media(prefers-reduced-motion:reduce){
+  .hero{animation:none}
+  .reveal>*,.trouble-list li,.cards .card,.rating .score,.rating .stars{
+    opacity:1!important;transform:none!important;transition:none!important}
+  .mobile-bar{transform:none}
 }
 .demo-flag{background:#101C26;color:#F6F2EA;padding:12px 20px;font-size:.84rem;
   line-height:1.75;text-align:center;letter-spacing:.02em}
@@ -331,6 +386,13 @@ footer a:hover{color:#fff}
     els.forEach(function(e){e.classList.add('visible')});
     return;
   }
+  var mb = document.querySelector('.mobile-bar');
+  if(mb){
+    window.addEventListener('scroll', function(){
+      mb.classList.toggle('show', (window.scrollY||window.pageYOffset) > 260);
+    }, {passive:true});
+  }
+
   var io = new IntersectionObserver(function(entries){
     entries.forEach(function(en){
       if(en.isIntersecting){ en.target.classList.add('visible'); io.unobserve(en.target); }

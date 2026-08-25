@@ -1,2 +1,5 @@
 User-agent: *
+Allow: /
 Disallow: /p/
+
+Sitemap: https://fukinotoudaikirai1128-lang.github.io/miseba/sitemap.xml

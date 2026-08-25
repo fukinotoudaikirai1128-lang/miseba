@@ -4,11 +4,45 @@
 <meta charset="UTF-8">
 <script>document.documentElement.className+=" js";</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ミセバ｜小さなお店のホームページ制作</title>
-<meta name="description" content="ホームページをまだお持ちでない小さなお店へ。ご依頼の前に試作のページをお作りして、実物を見ていただいてからご判断いただけます。初期費用50,000円・月額5,000円。">
-<meta property="og:title" content="ミセバ｜見てから、決めてください。">
-<meta property="og:description" content="ご依頼の前に試作のページをお作りします。気に入らなければ、そのままお断りいただけます。">
+<title>ミセバ｜長野市の小さなお店のホームページ制作｜初期5万円・月5千円</title>
+<meta name="description" content="長野市で、ホームページをお持ちでない工務店・水道工事・電気工事・屋根工事などの小さなお店へ。ご依頼の前に試作の1ページをお作りして、実物を見ていただいてから決められます。初期費用50,000円・月額5,000円。個人でやっています。">
+<link rel="canonical" href="https://fukinotoudaikirai1128-lang.github.io/miseba/">
+<meta name="robots" content="index, follow">
+
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="ミセバ">
+<meta property="og:url" content="https://fukinotoudaikirai1128-lang.github.io/miseba/">
+<meta property="og:title" content="ミセバ｜見てから、決めてください。">
+<meta property="og:description" content="ホームページをお持ちでない小さなお店へ。ご依頼の前に試作の1ページをお作りします。気に入らなければ、そのままお断りいただけます。初期5万円・月5千円。">
+<meta property="og:image" content="https://fukinotoudaikirai1128-lang.github.io/miseba/ogp.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ja_JP">
+<meta name="twitter:card" content="summary_large_image">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "ミセバ",
+  "alternateName": "MISEBA",
+  "url": "https://fukinotoudaikirai1128-lang.github.io/miseba/",
+  "image": "https://fukinotoudaikirai1128-lang.github.io/miseba/ogp.png",
+  "description": "ホームページをお持ちでない小規模事業者向けに、依頼前に試作の1ページを作ってお見せするホームページ制作。長野市を中心に対応。",
+  "email": "onikudaisuki1388@gmail.com",
+  "areaServed": { "@type": "City", "name": "長野市", "address": { "@type": "PostalAddress", "addressRegion": "長野県", "addressCountry": "JP" } },
+  "priceRange": "¥30,000〜¥50,000",
+  "knowsLanguage": "ja",
+  "makesOffer": [
+    { "@type": "Offer", "name": "ホームページ制作（1ページ）", "price": "50000", "priceCurrency": "JPY",
+      "description": "試作を見てから決められます。修正2回まで含みます。" },
+    { "@type": "Offer", "name": "公開後の保守・更新（月額）", "price": "5000", "priceCurrency": "JPY",
+      "description": "公開の維持、月1回程度の更新、Googleマップの口コミ返信のお手伝い。" }
+  ],
+  "sameAs": ["https://lin.ee/VGyzGYv"]
+}
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500;700&display=swap" rel="stylesheet">
@@ -159,6 +193,28 @@ p:last-child{margin-bottom:0}
   border-left:3px solid var(--brass);padding:6px 0 6px 26px;margin:8px 0 30px;
 }
 
+/* ---------- ヒーローの下向き矢印 ---------- */
+.scrolldown{
+  position:absolute;left:50%;bottom:26px;transform:translateX(-50%);z-index:2;
+  width:22px;height:36px;border:1.5px solid rgba(231,217,191,.5);border-radius:12px;
+  opacity:0;animation:fadeIn .8s var(--ease) 1.4s forwards;
+}
+.scrolldown::after{
+  content:"";position:absolute;left:50%;top:8px;margin-left:-2px;
+  width:4px;height:4px;border-radius:50%;background:var(--brass-soft);
+  animation:wheel 1.9s var(--ease) infinite;
+}
+@keyframes fadeIn{to{opacity:1}}
+@keyframes wheel{
+  0%{transform:translateY(0);opacity:0}
+  22%{opacity:1}
+  70%{transform:translateY(13px);opacity:0}
+  100%{opacity:0}
+}
+
+/* ---------- 数字のカウントアップ ---------- */
+.amt .num{display:inline-block;font-variant-numeric:tabular-nums}
+
 /* ---------- ある / ない の比較 ---------- */
 .vs{display:grid;gap:18px;margin-top:8px}
 @media(min-width:760px){.vs{grid-template-columns:1fr 1fr;gap:22px}}
@@ -178,6 +234,28 @@ p:last-child{margin-bottom:0}
   padding:9px 0;border-bottom:1px solid var(--line);
 }
 .vs li:last-child{border-bottom:none}
+/* 項目が上から順に現れる */
+.js .vs li{opacity:0;transform:translateX(-8px);
+  transition:opacity .5s var(--ease),transform .5s var(--ease)}
+.js .visible .vs li{opacity:1;transform:none}
+.js .visible .vs li:nth-child(1){transition-delay:.06s}
+.js .visible .vs li:nth-child(2){transition-delay:.12s}
+.js .visible .vs li:nth-child(3){transition-delay:.18s}
+.js .visible .vs li:nth-child(4){transition-delay:.24s}
+.js .visible .vs li:nth-child(5){transition-delay:.30s}
+.js .visible .vs li:nth-child(6){transition-delay:.36s}
+.js .visible .vs li:nth-child(7){transition-delay:.42s}
+.js .visible .vs li:nth-child(8){transition-delay:.48s}
+/* 右側（ある側）は少し遅れて始まる */
+.js .visible .vs-col.has li{transition-delay:calc(var(--d,0s) + .18s)}
+.js .visible .vs-col.has li:nth-child(1){transition-delay:.24s}
+.js .visible .vs-col.has li:nth-child(2){transition-delay:.30s}
+.js .visible .vs-col.has li:nth-child(3){transition-delay:.36s}
+.js .visible .vs-col.has li:nth-child(4){transition-delay:.42s}
+.js .visible .vs-col.has li:nth-child(5){transition-delay:.48s}
+.js .visible .vs-col.has li:nth-child(6){transition-delay:.54s}
+.js .visible .vs-col.has li:nth-child(7){transition-delay:.60s}
+.js .visible .vs-col.has li:nth-child(8){transition-delay:.66s}
 .vs .mk{
   flex:none;width:19px;height:19px;border-radius:50%;margin-top:2px;
   display:flex;align-items:center;justify-content:center;
@@ -425,6 +503,7 @@ footer .fnote{margin-top:18px;font-size:.78rem;color:#69747C}
       <a href="#works" class="btn btn-ghost"><span>作例を見る</span></a>
     </div>
   </div>
+  <div class="scrolldown" aria-hidden="true"></div>
 </header>
 
 <main>
@@ -573,13 +652,13 @@ footer .fnote{margin-top:18px;font-size:.78rem;color:#69747C}
       <div class="plans">
         <div class="plan">
           <div class="cap">はじめにかかる費用</div>
-          <div class="amt">50,000<small>円</small></div>
+          <div class="amt"><span class="num" data-to="50000">50,000</span><small>円</small></div>
           <div class="desc">1ページの制作費です。修正2回まで含みます。
             お支払いは公開後、請求書をお送りしてから銀行振込でお願いしています。</div>
         </div>
         <div class="plan">
           <div class="cap">公開後の月額</div>
-          <div class="amt">5,000<small>円</small></div>
+          <div class="amt"><span class="num" data-to="5000">5,000</span><small>円</small></div>
           <div class="desc">ページの公開の維持、月1回程度の内容の更新、
             Googleマップの口コミへの返信のお手伝いが含まれます。
             1ヶ月前にご連絡いただければ、いつでもやめられます。</div>
@@ -588,7 +667,7 @@ footer .fnote{margin-top:18px;font-size:.78rem;color:#69747C}
 
       <div class="plan monitor" style="margin-bottom:34px">
         <div class="cap">はじめの3件のみ</div>
-        <div class="amt"><span class="was">50,000円</span>30,000<small>円</small></div>
+        <div class="amt"><span class="was">50,000円</span><span class="num" data-to="30000">30,000</span><small>円</small></div>
         <div class="desc">これから実績を作っていく段階のため、はじめの3件のお店に限り、
           制作費を30,000円でお引き受けしています。
           <strong>「ミセバの実績として紹介させていただくこと」が条件</strong>です。
@@ -820,6 +899,28 @@ footer .fnote{margin-top:18px;font-size:.78rem;color:#69747C}
       ticking = false;
     });
   }
+  /* --- 金額のカウントアップ --- */
+  var nums = document.querySelectorAll('.amt .num');
+  if(!reduce && 'IntersectionObserver' in window && nums.length){
+    var nio = new IntersectionObserver(function(es){
+      es.forEach(function(en){
+        if(!en.isIntersecting) return;
+        var el = en.target, to = parseInt(el.getAttribute('data-to'),10);
+        nio.unobserve(el);
+        var dur = 900, t0 = null;
+        function step(t){
+          if(!t0) t0 = t;
+          var k = Math.min((t - t0) / dur, 1);
+          var e = 1 - Math.pow(1 - k, 3);           /* ease-out */
+          el.textContent = Math.round(to * e).toLocaleString('ja-JP');
+          if(k < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      });
+    },{threshold:.6});
+    nums.forEach(function(n){ nio.observe(n); });
+  }
+
   /* --- 作例タブの切り替え --- */
   var tabs = document.getElementById('demo-tabs');
   if(tabs){
