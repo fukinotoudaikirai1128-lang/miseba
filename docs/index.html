@@ -152,13 +152,15 @@ a{color:inherit}
 /* 見出しを一文字ずつ出す */
 /* 一文字ずつ、下から回り込みながら立ち上がる */
 .chw{display:inline-block;overflow:hidden;vertical-align:bottom;perspective:420px}
+/* ぼかしは使わない。保険のアニメーションが filter を戻せず、
+   ぼやけたまま固定される文字が出るため。動きだけで見せる。 */
 .ch{display:inline-block;opacity:0;
-  transform:translateY(.85em) rotateX(-88deg) scale(.86);
-  transform-origin:50% 100%;filter:blur(4px);
-  transition:opacity .6s var(--ease),transform .85s cubic-bezier(.16,.9,.24,1.08),filter .6s var(--ease)}
-.stage.on .ch,.visible .ch{opacity:1;transform:none;filter:none}
+  transform:translateY(.8em) rotateX(-86deg) scale(.88);
+  transform-origin:50% 100%;
+  transition:opacity .55s var(--ease),transform .8s cubic-bezier(.16,.9,.24,1.08)}
+.stage.on .ch,.visible .ch{opacity:1;transform:none}
 /* 本文側の見出しは横から流れ込む */
-.doc .ch{transform:translateY(.5em) translateX(.25em) rotateY(42deg);filter:blur(3px)}
+.doc .ch{transform:translateY(.45em) translateX(.22em) rotateY(38deg)}
 .js .stage .inner{opacity:0;transform:translateY(30px);
   transition:opacity 1s var(--ease),transform 1s var(--ease);
   animation:failsafe .01s linear 4s forwards}
@@ -415,7 +417,7 @@ footer .fnote{margin-top:20px;font-size:.78rem;color:#6D6A64}
   transition:opacity .55s var(--ease),transform .55s var(--ease);
   animation:failsafe .01s linear 4.4s forwards}
 .js .visible .vs li{opacity:1;transform:none}
-@keyframes failsafe{to{opacity:1;transform:none}}
+@keyframes failsafe{to{opacity:1;transform:none;filter:none}}
 
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
@@ -874,14 +876,9 @@ footer .fnote{margin-top:20px;font-size:.78rem;color:#6D6A64}
   /* --- 対象：クロームのトーラスノット --- */
   /* 分割数は見た目がほぼ変わらない範囲まで落とす。古い端末での負荷対策 */
   var seg = coarse ? 96 : 170, tub = coarse ? 14 : 24;
-  /* 画面ごとに形そのものを変える。切り替わりが目に見えて分かる */
-  var SHAPES = [
-    new THREE.TorusKnotGeometry(1.15, 0.36, seg, tub, 2, 3),
-    new THREE.TorusKnotGeometry(1.10, 0.30, seg, tub, 3, 4),
-    new THREE.IcosahedronGeometry(1.55, coarse?1:2),
-    new THREE.TorusKnotGeometry(1.05, 0.42, seg, tub, 4, 3)
-  ];
-  var geo = SHAPES[0];
+  /* 形は変えない。途中で入れ替わると見ていて落ち着かないため、
+     ひとつの形のまま、色と大きさとカメラだけを動かす。 */
+  var geo = new THREE.TorusKnotGeometry(1.15, 0.36, seg, tub, 2, 3);
   /* 明るい背景では真っ白に飛びやすいので、金属をわずかに締めて粗さを上げる */
   var mat = new THREE.MeshPhysicalMaterial({
     color: 0x5C6672, metalness: 1.0, roughness: 0.13,
@@ -940,7 +937,7 @@ footer .fnote{margin-top:20px;font-size:.78rem;color:#6D6A64}
     if(sd) sd.classList.toggle('hide', y > window.innerHeight*0.6);
   }
 
-  var t0 = 0, shownShape = 0, spin = 0;
+  var t0 = 0;
   function frame(t){
     requestAnimationFrame(frame);
     if(!running) return;
@@ -956,21 +953,13 @@ footer .fnote{margin-top:20px;font-size:.78rem;color:#6D6A64}
     mat.color.copy(cur.col);
     mat.envMapIntensity = lerp(mat.envMapIntensity, tgt.i===0 ? 1.35 : 1.0, 0.05);
 
-    /* 画面が変わったら形そのものを差し替える */
-    if(shownShape !== tgt.i){
-      shownShape = tgt.i;
-      knot.geometry = SHAPES[tgt.i];
-      spin = 5.2;                          /* 切り替えた瞬間に強く回す */
-    }
-    spin = lerp(spin, 0, 0.045);
-
     /* カメラが回りながら寄って離れて、傾く */
     camera.position.set(Math.sin(cur.a)*cur.r, 1.1 + cur.y, Math.cos(cur.a)*cur.r);
     camera.up.set(Math.sin(cur.rl)*0.42, 1, 0);
     camera.lookAt(0, 0, 0);
 
-    knot.rotation.y += dt*(0.55 + spin);
-    knot.rotation.z += dt*(0.16 + spin*0.4);
+    knot.rotation.y += dt*0.42;
+    knot.rotation.z += dt*0.13;
     knot.rotation.x  = Math.sin(t*0.00042)*0.42;
     knot.position.y  = Math.sin(t*0.0011)*0.30;
     var pulse = 1 + Math.sin(t*0.0016)*0.045;
