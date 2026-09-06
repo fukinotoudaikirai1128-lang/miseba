@@ -8,7 +8,7 @@
 <meta name="description" content="安くホームページ（ウェブサイト）を作りたい小さなお店へ。ご依頼の前に試作の1ページをお作りするので、実物を見てから決められます。初期50,000円・月5,000円。LINEで完結するため全国対応です。">
 <link rel="canonical" href="https://fukinotoudaikirai1128-lang.github.io/miseba/">
 <meta name="robots" content="index, follow">
-<meta name="theme-color" content="#08090B">
+<meta name="theme-color" content="#07080A">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ミセバ">
@@ -55,9 +55,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#08090B;
-  --panel:#101216;
-  --panel-2:#171A1F;
+  --ink:#07080A;
+  --panel:#0F1115;
+  --panel-2:#161A1F;
   --paper:#F2EDE4;
   --muted:#9C978D;
   --brass:#C9A063;
@@ -71,24 +71,31 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;background:var(--ink)}
-body{
-  font-family:var(--sans);color:var(--paper);background:var(--ink);
+body{font-family:var(--sans);color:var(--paper);background:var(--ink);
   line-height:1.95;font-size:16px;letter-spacing:.02em;
-  -webkit-font-smoothing:antialiased;overflow-x:hidden;
-}
+  -webkit-font-smoothing:antialiased;overflow-x:hidden}
 img{max-width:100%;display:block}
 a{color:inherit}
 ::selection{background:var(--brass);color:var(--ink)}
-
 .wrap{max-width:1120px;margin:0 auto;padding:0 26px}
 .narrow{max-width:760px}
-section{padding:92px 0;position:relative}
-@media(min-width:769px){section{padding:132px 0}}
 
-.frame{position:fixed;inset:var(--gut);border:1px solid var(--line);pointer-events:none;z-index:80}
+/* ================= 3D キャンバス（画面に固定） ================= */
+#gl{position:fixed;inset:0;width:100%;height:100%;z-index:0;display:block;
+  background:radial-gradient(1200px 700px at 70% 20%,#141821,#07080A 70%)}
+#gl.gone{display:none}
+/* WebGLが使えないときの代わりの背景 */
+.nogl{position:fixed;inset:0;z-index:0;display:none;
+  background:
+    radial-gradient(900px 520px at 74% 18%,rgba(201,160,99,.26),transparent 62%),
+    radial-gradient(700px 420px at 10% 88%,rgba(201,160,99,.12),transparent 60%),
+    #07080A}
+.nogl.on{display:block}
+
+.frame{position:fixed;inset:var(--gut);border:1px solid var(--line);pointer-events:none;z-index:60}
 @media(max-width:700px){.frame{display:none}}
 .edge{position:fixed;top:50%;font-size:.6rem;letter-spacing:.42em;color:var(--muted);
-  writing-mode:vertical-rl;z-index:81;pointer-events:none;font-weight:700}
+  writing-mode:vertical-rl;z-index:61;pointer-events:none;font-weight:700}
 .edge.l{left:calc(var(--gut) + 13px);transform:translateY(-50%) rotate(180deg)}
 .edge.r{right:calc(var(--gut) + 13px);transform:translateY(-50%)}
 @media(max-width:900px){.edge{display:none}}
@@ -96,7 +103,62 @@ section{padding:92px 0;position:relative}
   background:linear-gradient(90deg,var(--brass),var(--brass-soft));
   transform:scaleX(0);transform-origin:0 50%;pointer-events:none}
 
-/* ---------- 見出し ---------- */
+/* ---------- ヘッダー ---------- */
+.top{position:fixed;top:0;left:0;right:0;z-index:70;background:rgba(7,8,10,.5);
+  backdrop-filter:saturate(150%) blur(14px);border-bottom:1px solid transparent;
+  transition:border-color .5s var(--ease),background .5s var(--ease)}
+.top.stuck{border-bottom-color:var(--line);background:rgba(7,8,10,.86)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;height:68px}
+.mark{font-family:var(--serif);font-weight:700;font-size:1.2rem;letter-spacing:.26em;text-decoration:none}
+.top nav{display:none;gap:30px;font-size:.8rem;letter-spacing:.12em}
+.top nav a{text-decoration:none;color:rgba(242,237,228,.72);position:relative;padding-bottom:4px;
+  transition:color .35s var(--ease)}
+.top nav a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--brass);
+  transform:scaleX(0);transform-origin:100% 50%;transition:transform .45s var(--ease)}
+.top nav a:hover{color:var(--brass-soft)}
+.top nav a:hover::after{transform:scaleX(1);transform-origin:0 50%}
+@media(min-width:900px){.top nav{display:flex}}
+
+/* ================= 3Dの上に重なる4つの画面 ================= */
+.stages{position:relative;z-index:10}
+/* 3Dの上でも文字が読めるように、左側へ暗い覆いを敷く */
+.stages::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:linear-gradient(90deg,
+    rgba(7,8,10,.94) 0%, rgba(7,8,10,.86) 26%, rgba(7,8,10,.55) 46%, rgba(7,8,10,0) 68%)}
+@media(max-width:820px){
+  .stages::before{background:linear-gradient(180deg,
+    rgba(7,8,10,.55) 0%, rgba(7,8,10,.88) 38%, rgba(7,8,10,.94) 100%)}
+}
+.stage{min-height:100vh;display:flex;align-items:center;padding:96px 0}
+.stage .inner{max-width:min(34em,52%)}
+@media(max-width:820px){.stage .inner{max-width:100%}}
+.stage .idx{font-size:.64rem;letter-spacing:.46em;color:var(--brass);font-weight:700;margin-bottom:20px}
+.stage h2{font-family:var(--serif);font-weight:700;letter-spacing:.03em;
+  font-size:clamp(2.1rem,7.2vw,4.2rem);line-height:1.32;margin-bottom:22px}
+.stage h2 .ac{color:var(--brass-soft)}
+.stage p{font-size:1.04rem;color:rgba(242,237,228,.82);
+  text-shadow:0 2px 24px rgba(0,0,0,.9)}
+.stage .btn-row{margin-top:34px}
+.js .stage .inner{opacity:0;transform:translateY(30px);
+  transition:opacity 1s var(--ease),transform 1s var(--ease);
+  animation:failsafe .01s linear 4s forwards}
+.js .stage.on .inner{opacity:1;transform:none}
+.scrolldown{position:fixed;left:50%;bottom:30px;transform:translateX(-50%);z-index:62;
+  width:24px;height:38px;border:1px solid rgba(231,217,191,.42);border-radius:13px;
+  opacity:0;animation:fadeIn .9s var(--ease) 1.6s forwards;transition:opacity .5s}
+.scrolldown.hide{opacity:0!important}
+.scrolldown::after{content:"";position:absolute;left:50%;top:8px;margin-left:-2px;
+  width:4px;height:4px;border-radius:50%;background:var(--brass-soft);
+  animation:wheel 2s var(--ease) infinite}
+@keyframes fadeIn{to{opacity:1}}
+@keyframes wheel{0%{transform:translateY(0);opacity:0}22%{opacity:1}
+  70%{transform:translateY(15px);opacity:0}100%{opacity:0}}
+
+/* ================= 下half：読ませる部分（不透明） ================= */
+.doc{position:relative;z-index:20;background:var(--ink);
+  border-top:1px solid var(--line);box-shadow:0 -60px 120px -40px #000}
+section{padding:92px 0;position:relative}
+@media(min-width:769px){section{padding:126px 0}}
 .label{font-size:.66rem;letter-spacing:.4em;font-weight:700;color:var(--brass);
   display:flex;align-items:center;gap:16px;margin-bottom:26px}
 .label::after{content:"";flex:1;height:1px;background:var(--line-2);
@@ -109,104 +171,18 @@ p{margin-bottom:19px}
 p:last-child{margin-bottom:0}
 .lead{color:rgba(242,237,228,.8);font-size:1.04rem}
 .small{font-size:.86rem;color:var(--muted);line-height:1.85}
+.pull{font-family:var(--serif);font-weight:500;font-size:clamp(1.3rem,3.6vw,1.85rem);
+  line-height:1.8;letter-spacing:.03em;color:var(--brass-soft);
+  border-left:2px solid var(--brass);padding:8px 0 8px 30px;margin:10px 0 34px}
 
-/* ---------- ヘッダー ---------- */
-.top{position:sticky;top:0;z-index:70;background:rgba(8,9,11,.72);
-  backdrop-filter:saturate(150%) blur(14px);border-bottom:1px solid transparent;
-  transition:border-color .5s var(--ease)}
-.top.stuck{border-bottom-color:var(--line)}
-.top .wrap{display:flex;align-items:center;justify-content:space-between;height:68px}
-.mark{font-family:var(--serif);font-weight:700;font-size:1.2rem;letter-spacing:.26em;text-decoration:none}
-.top nav{display:none;gap:32px;font-size:.8rem;letter-spacing:.12em}
-.top nav a{text-decoration:none;color:rgba(242,237,228,.72);position:relative;padding-bottom:4px;
-  transition:color .35s var(--ease)}
-.top nav a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;
-  background:var(--brass);transform:scaleX(0);transform-origin:100% 50%;transition:transform .45s var(--ease)}
-.top nav a:hover{color:var(--brass-soft)}
-.top nav a:hover::after{transform:scaleX(1);transform-origin:0 50%}
-@media(min-width:900px){.top nav{display:flex}}
-
-/* ================= ヒーロー：奥行きのある3D空間 ================= */
-.hero{position:relative;overflow:hidden;min-height:92vh;display:flex;align-items:center;
-  padding:118px 0 104px;perspective:1200px;perspective-origin:50% 45%}
-.hero::before{content:"";position:absolute;inset:-25%;
-  background:
-    radial-gradient(1000px 480px at 76% 10%,rgba(201,160,99,.30),transparent 62%),
-    radial-gradient(700px 380px at 4% 96%,rgba(201,160,99,.12),transparent 60%);
-  animation:drift 30s var(--ease) infinite alternate}
-@keyframes drift{0%{transform:translate3d(0,0,0) scale(1)}
-  100%{transform:translate3d(-4%,3%,0) scale(1.1)}}
-.hero .wrap{position:relative;z-index:3;width:100%}
-.hero .eyebrow{font-size:.64rem;letter-spacing:.48em;color:var(--brass-soft);
-  margin-bottom:34px;font-weight:700}
-.hero h1{font-family:var(--serif);font-weight:700;letter-spacing:.03em;
-  font-size:clamp(2.5rem,9.4vw,5.4rem);line-height:1.3;margin-bottom:34px}
-.hero h1 .accent{color:var(--brass-soft)}
-.hero p{max-width:31em;color:rgba(242,237,228,.78);font-size:1.05rem}
-.hero .rule{width:0;height:2px;background:var(--brass);margin:0 0 34px;
-  animation:ruleIn 1.3s var(--ease) .3s forwards}
-@keyframes ruleIn{to{width:74px}}
-
-/* 奥に浮かぶ立体。マウスとスクロールで視差が動く */
-.depth{position:absolute;inset:0;z-index:1;transform-style:preserve-3d;pointer-events:none}
-.float{position:absolute;transform-style:preserve-3d;opacity:.5}
-.float.a{top:16%;right:9%}
-.float.b{bottom:19%;left:6%}
-.float.c{top:58%;right:26%}
-@media(max-width:860px){.float.b,.float.c{display:none}.float.a{top:8%;right:-6%;opacity:.3}}
-
-/* 回転する立方体（6面＝ミセバが作る業種） */
-.cube{width:112px;height:112px;position:relative;transform-style:preserve-3d;
-  animation:spin 26s linear infinite}
-.cube.sm{width:64px;height:64px;animation-duration:34s;animation-direction:reverse}
-@keyframes spin{
-  0%{transform:rotateX(-22deg) rotateY(0deg)}
-  100%{transform:rotateX(-22deg) rotateY(360deg)}
-}
-.face{position:absolute;inset:0;border:1px solid rgba(201,160,99,.5);
-  background:rgba(201,160,99,.05);display:flex;align-items:center;justify-content:center}
-.cube .face:nth-child(1){transform:translateZ(56px)}
-.cube .face:nth-child(2){transform:rotateY(180deg) translateZ(56px)}
-.cube .face:nth-child(3){transform:rotateY(90deg) translateZ(56px)}
-.cube .face:nth-child(4){transform:rotateY(-90deg) translateZ(56px)}
-.cube .face:nth-child(5){transform:rotateX(90deg) translateZ(56px)}
-.cube .face:nth-child(6){transform:rotateX(-90deg) translateZ(56px)}
-.cube.sm .face:nth-child(1){transform:translateZ(32px)}
-.cube.sm .face:nth-child(2){transform:rotateY(180deg) translateZ(32px)}
-.cube.sm .face:nth-child(3){transform:rotateY(90deg) translateZ(32px)}
-.cube.sm .face:nth-child(4){transform:rotateY(-90deg) translateZ(32px)}
-.cube.sm .face:nth-child(5){transform:rotateX(90deg) translateZ(32px)}
-.cube.sm .face:nth-child(6){transform:rotateX(-90deg) translateZ(32px)}
-.face svg{width:44px;height:44px;stroke:var(--brass);fill:none;stroke-width:1.4;
-  stroke-linecap:round;stroke-linejoin:round;opacity:.9}
-.cube.sm .face svg{width:26px;height:26px}
-
-/* 傾いた板 */
-.plate{width:150px;height:96px;border:1px solid rgba(242,237,228,.16);
-  background:linear-gradient(135deg,rgba(242,237,228,.05),transparent);
-  transform:rotateX(58deg) rotateZ(-24deg);animation:hover 9s ease-in-out infinite alternate}
-@keyframes hover{to{transform:rotateX(58deg) rotateZ(-24deg) translateZ(34px)}}
-
-.scrolldown{position:absolute;left:50%;bottom:34px;transform:translateX(-50%);z-index:4;
-  width:24px;height:38px;border:1px solid rgba(231,217,191,.42);border-radius:13px;
-  opacity:0;animation:fadeIn .9s var(--ease) 1.5s forwards}
-.scrolldown::after{content:"";position:absolute;left:50%;top:8px;margin-left:-2px;
-  width:4px;height:4px;border-radius:50%;background:var(--brass-soft);
-  animation:wheel 2s var(--ease) infinite}
-@keyframes fadeIn{to{opacity:1}}
-@keyframes wheel{0%{transform:translateY(0);opacity:0}22%{opacity:1}
-  70%{transform:translateY(15px);opacity:0}100%{opacity:0}}
-
-/* ---------- 流れる帯 ---------- */
 .marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);
-  overflow:hidden;padding:20px 0;background:var(--panel)}
+  overflow:hidden;padding:20px 0;background:var(--panel);position:relative;z-index:20}
 .marquee .track{display:flex;gap:52px;width:max-content;animation:slide 34s linear infinite}
 .marquee span{font-family:var(--serif);font-size:1.06rem;letter-spacing:.1em;
   color:rgba(242,237,228,.5);white-space:nowrap}
 .marquee span b{color:var(--brass)}
 @keyframes slide{to{transform:translateX(-50%)}}
 
-/* ---------- ボタン ---------- */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;
   min-height:56px;padding:15px 34px;border-radius:4px;text-decoration:none;
   font-weight:700;font-size:.95rem;letter-spacing:.08em;border:1px solid transparent;
@@ -218,15 +194,11 @@ p:last-child{margin-bottom:0}
 .btn:hover{transform:translateY(-3px);box-shadow:0 22px 48px -26px rgba(0,0,0,.9)}
 .btn span{position:relative}
 .btn-line{background:#06C755;color:#fff}
-.btn-ghost{border-color:var(--line-2);color:var(--paper)}
+.btn-ghost{border-color:var(--line-2);color:var(--paper);background:rgba(7,8,10,.4)}
 .btn-brass{background:var(--brass);color:var(--ink)}
 .btn-row{display:flex;flex-wrap:wrap;gap:15px;margin-top:40px}
 
-.pull{font-family:var(--serif);font-weight:500;font-size:clamp(1.3rem,3.6vw,1.85rem);
-  line-height:1.8;letter-spacing:.03em;color:var(--brass-soft);
-  border-left:2px solid var(--brass);padding:8px 0 8px 30px;margin:10px 0 34px}
-
-/* ================= 業種アイコン（線が描かれる） ================= */
+/* 業種アイコン */
 .trades{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:38px}
 @media(min-width:700px){.trades{grid-template-columns:repeat(5,1fr);gap:16px}}
 .trade{background:var(--panel);border:1px solid var(--line);border-radius:8px;
@@ -235,22 +207,19 @@ p:last-child{margin-bottom:0}
 .trade:hover{transform:translateY(-6px);border-color:rgba(201,160,99,.55);background:var(--panel-2)}
 .trade svg{width:46px;height:46px;margin:0 auto 12px;stroke:var(--brass);fill:none;
   stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
-.trade svg path,.trade svg circle,.trade svg line{
-  stroke-dasharray:120;stroke-dashoffset:120;
-  transition:stroke-dashoffset 1.4s var(--ease)}
-.visible .trade svg path,.visible .trade svg circle,.visible .trade svg line{stroke-dashoffset:0}
-.visible .trade:nth-child(2) svg *{transition-delay:.12s}
-.visible .trade:nth-child(3) svg *{transition-delay:.24s}
-.visible .trade:nth-child(4) svg *{transition-delay:.36s}
-.visible .trade:nth-child(5) svg *{transition-delay:.48s}
+.trade svg path{stroke-dasharray:120;stroke-dashoffset:120;transition:stroke-dashoffset 1.4s var(--ease)}
+.visible .trade svg path{stroke-dashoffset:0}
+.visible .trade:nth-child(2) svg path{transition-delay:.12s}
+.visible .trade:nth-child(3) svg path{transition-delay:.24s}
+.visible .trade:nth-child(4) svg path{transition-delay:.36s}
+.visible .trade:nth-child(5) svg path{transition-delay:.48s}
 .trade b{display:block;font-size:.86rem;letter-spacing:.05em}
 
-/* ================= ある / ない（3Dで起き上がる） ================= */
+/* ある / ない */
 .vs{display:grid;gap:20px;margin-top:10px;perspective:1200px}
 @media(min-width:760px){.vs{grid-template-columns:1fr 1fr;gap:26px}}
-.vs-col{background:var(--panel);border:1px solid var(--line);border-radius:8px;
-  padding:30px 26px;transform-style:preserve-3d;
-  transition:transform .8s var(--ease),border-color .5s var(--ease),box-shadow .5s var(--ease)}
+.vs-col{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:30px 26px;
+  transform-style:preserve-3d;transition:transform .8s var(--ease),box-shadow .5s var(--ease)}
 .js .vs-col{transform:rotateY(14deg) translateZ(-40px)}
 .js .vs-col:nth-child(2){transform:rotateY(-14deg) translateZ(-40px)}
 .js .visible .vs-col,.js .visible .vs-col:nth-child(2){transform:none}
@@ -268,13 +237,13 @@ p:last-child{margin-bottom:0}
 .vs .no{background:rgba(242,237,228,.07);color:var(--muted)}
 .vs li.dim{color:var(--muted)}
 
-/* ================= 作例：3Dで起き上がる端末 ================= */
-.stage{perspective:1500px;perspective-origin:50% 40%;margin-top:6px}
+/* 作例 */
+.pstage{perspective:1500px;perspective-origin:50% 40%;margin-top:6px}
 .device{transform-style:preserve-3d;transition:transform 1.2s var(--ease);will-change:transform}
-.js .device{transform:rotateX(26deg) rotateY(-16deg) scale(.9)}
+.js .device{transform:rotateX(24deg) rotateY(-14deg) scale(.92)}
 .js .visible .device{transform:rotateX(6deg) rotateY(0deg) scale(1)}
 .browser{border-radius:10px;overflow:hidden;background:#fff;border:1px solid var(--line-2);
-  box-shadow:0 60px 110px -50px rgba(0,0,0,1),0 0 0 1px rgba(201,160,99,.14)}
+  box-shadow:0 60px 110px -50px #000,0 0 0 1px rgba(201,160,99,.14)}
 .browser .bar{display:flex;align-items:center;gap:8px;padding:12px 15px;
   background:var(--panel-2);border-bottom:1px solid var(--line)}
 .browser .dot{width:10px;height:10px;border-radius:50%;background:rgba(242,237,228,.2);flex:none}
@@ -282,40 +251,36 @@ p:last-child{margin-bottom:0}
   font-size:.71rem;color:var(--muted);padding:6px 15px;letter-spacing:.04em;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .screen{position:relative;height:440px;overflow:hidden;background:#fff}
-.screen iframe{width:1280px;height:1720px;border:0;transform:scale(.44);
-  transform-origin:0 0;pointer-events:none}
-.screen .veil{position:absolute;inset:0;
-  background:linear-gradient(to bottom,transparent 58%,rgba(8,9,11,.92))}
-.screen .open{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);white-space:nowrap}
+.screen iframe{width:1280px;height:1720px;border:0;transform:scale(.44);transform-origin:0 0;
+  pointer-events:none;transition:opacity .32s var(--ease)}
 .screen.swapping iframe{opacity:0}
-.screen iframe{transition:opacity .32s var(--ease)}
+.screen .veil{position:absolute;inset:0;
+  background:linear-gradient(to bottom,transparent 58%,rgba(7,8,10,.92))}
+.screen .open{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);white-space:nowrap}
 @media(max-width:680px){.screen{height:310px}.screen iframe{transform:scale(.27)}
-  .js .device{transform:rotateX(14deg) scale(.94)}}
-
+  .js .device{transform:rotateX(12deg) scale(.95)}}
 .tabs{display:flex;flex-wrap:wrap;gap:9px;margin:0 0 26px}
-.tab{font:inherit;font-size:.85rem;font-weight:700;letter-spacing:.05em;
-  padding:11px 20px;min-height:46px;border-radius:100px;border:1px solid var(--line-2);
-  background:transparent;color:rgba(242,237,228,.75);cursor:pointer;
-  transition:background .4s var(--ease),color .4s var(--ease),
-  border-color .4s var(--ease),transform .4s var(--ease)}
+.tab{font:inherit;font-size:.85rem;font-weight:700;letter-spacing:.05em;padding:11px 20px;
+  min-height:46px;border-radius:100px;border:1px solid var(--line-2);background:transparent;
+  color:rgba(242,237,228,.75);cursor:pointer;
+  transition:background .4s var(--ease),color .4s var(--ease),border-color .4s var(--ease),transform .4s var(--ease)}
 .tab:hover{border-color:var(--brass);color:var(--brass);transform:translateY(-2px)}
 .tab.is-on{background:var(--brass);border-color:var(--brass);color:var(--ink)}
 .tab.is-on:hover{transform:none}
 
-/* ---------- 進め方 ---------- */
+/* 進め方 */
 .steps{list-style:none;counter-reset:s;margin-top:10px}
 .steps li{counter-increment:s;position:relative;padding:0 0 34px 68px}
 .steps li::before{content:"0" counter(s);position:absolute;left:0;top:-3px;
   font-family:var(--serif);font-weight:700;font-size:1.22rem;color:var(--brass);letter-spacing:.06em}
 .steps li::after{content:"";position:absolute;left:18px;top:28px;bottom:3px;width:1px;
-  background:var(--line-2);transform:scaleY(0);transform-origin:50% 0;
-  transition:transform .9s var(--ease) .25s}
+  background:var(--line-2);transform:scaleY(0);transform-origin:50% 0;transition:transform .9s var(--ease) .25s}
 .visible .steps li::after{transform:scaleY(1)}
 .steps li:last-child{padding-bottom:0}
 .steps li:last-child::after{display:none}
 .steps p{color:rgba(242,237,228,.72);font-size:.95rem;margin:0}
 
-/* ---------- 料金 ---------- */
+/* 料金 */
 .plans{display:grid;gap:20px;margin-bottom:20px}
 @media(min-width:680px){.plans{grid-template-columns:1fr 1fr}}
 .plan{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:34px 30px;
@@ -331,10 +296,10 @@ p:last-child{margin-bottom:0}
 .monitor .cap{color:var(--brass-soft)}
 .monitor .amt{color:var(--brass-soft)}
 .monitor .desc{color:rgba(242,237,228,.72)}
-.monitor .amt .was{font-size:1.05rem;color:rgba(242,237,228,.4);
-  text-decoration:line-through;margin-right:13px;font-weight:500}
+.monitor .amt .was{font-size:1.05rem;color:rgba(242,237,228,.4);text-decoration:line-through;
+  margin-right:13px;font-weight:500}
 
-/* ---------- 帯グラフ ---------- */
+/* 帯グラフ */
 .bars{margin:8px 0 30px}
 .bars .cap{font-size:.79rem;color:var(--muted);margin-bottom:18px;letter-spacing:.05em}
 .bar-row{display:grid;grid-template-columns:68px 1fr 76px;gap:8px;align-items:center;margin-bottom:14px}
@@ -354,13 +319,13 @@ p:last-child{margin-bottom:0}
   padding:0 78px 0 76px;display:flex;justify-content:space-between}
 @media(min-width:600px){.bars .axis{padding:0 124px 0 134px}}
 
-/* ---------- 比較表 ---------- */
+/* 表 */
 .tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:10px 0 20px;
   border:1px solid var(--line);border-radius:8px;background:var(--panel)}
 table.cmp{width:100%;border-collapse:collapse;min-width:560px;font-size:.89rem}
 table.cmp th,table.cmp td{padding:16px 17px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
-table.cmp thead th{font-size:.75rem;letter-spacing:.14em;color:var(--muted);
-  font-weight:700;background:var(--panel-2);white-space:nowrap}
+table.cmp thead th{font-size:.75rem;letter-spacing:.14em;color:var(--muted);font-weight:700;
+  background:var(--panel-2);white-space:nowrap}
 table.cmp tbody th{font-weight:700;white-space:nowrap;color:rgba(242,237,228,.72);width:150px}
 table.cmp tbody tr{transition:background .35s var(--ease)}
 table.cmp tbody tr:hover{background:rgba(242,237,228,.03)}
@@ -375,9 +340,8 @@ table.cmp thead .own{background:rgba(201,160,99,.2);color:var(--brass-soft)}
 .note{background:var(--panel);border:1px solid var(--line);border-left:2px solid var(--brass);
   border-radius:0 8px 8px 0;padding:28px 30px}
 .note.plain{border-left-color:var(--line-2)}
-
-table.info{width:100%;border-collapse:collapse;background:var(--panel);
-  border:1px solid var(--line);border-radius:8px;overflow:hidden;font-size:.92rem}
+table.info{width:100%;border-collapse:collapse;background:var(--panel);border:1px solid var(--line);
+  border-radius:8px;overflow:hidden;font-size:.92rem}
 table.info th,table.info td{padding:16px 19px;text-align:left;border-bottom:1px solid var(--line)}
 table.info th{background:var(--panel-2);width:38%;font-weight:700;white-space:nowrap;color:rgba(242,237,228,.72)}
 table.info tr:last-child th,table.info tr:last-child td{border-bottom:none}
@@ -387,20 +351,17 @@ table.info tr:last-child th,table.info tr:last-child td{border-bottom:none}
   table.info tr{display:block;border-bottom:1px solid var(--line)}
   table.info tr:last-child{border-bottom:none}
 }
-
 .cta{position:relative;overflow:hidden;border-top:1px solid var(--line)}
 .cta::before{content:"";position:absolute;inset:-30%;
-  background:radial-gradient(680px 340px at 24% 0%,rgba(201,160,99,.2),transparent 60%);
-  animation:drift 34s var(--ease) infinite alternate-reverse}
+  background:radial-gradient(680px 340px at 24% 0%,rgba(201,160,99,.2),transparent 60%)}
 .cta .wrap{position:relative;z-index:1}
-
-footer{background:#050607;color:var(--muted);padding:54px 0;font-size:.84rem;
-  line-height:1.9;border-top:1px solid var(--line)}
+footer{background:#040507;color:var(--muted);padding:54px 0;font-size:.84rem;line-height:1.9;
+  border-top:1px solid var(--line);position:relative;z-index:20}
 footer a{color:rgba(242,237,228,.7)}
 footer .mark{color:var(--paper);font-size:1.1rem}
 footer .fnote{margin-top:20px;font-size:.78rem;color:#6D6A64}
 
-/* ---------- 出現。JSが動かなくても4秒後に必ず表示される ---------- */
+/* 出現。JSが動かなくても4秒後に必ず表示される */
 .js .reveal{opacity:0;transform:translateY(34px);
   transition:opacity .95s var(--ease),transform .95s var(--ease);
   animation:failsafe .01s linear 4s forwards}
@@ -417,42 +378,31 @@ footer .fnote{margin-top:20px;font-size:.78rem;color:#6D6A64}
   transition:opacity .55s var(--ease),transform .55s var(--ease);
   animation:failsafe .01s linear 4.4s forwards}
 .js .visible .vs li{opacity:1;transform:none}
-.js .visible .vs li:nth-child(1){transition-delay:.10s}
-.js .visible .vs li:nth-child(2){transition-delay:.16s}
-.js .visible .vs li:nth-child(3){transition-delay:.22s}
-.js .visible .vs li:nth-child(4){transition-delay:.28s}
-.js .visible .vs li:nth-child(5){transition-delay:.34s}
-.js .visible .vs li:nth-child(6){transition-delay:.40s}
-.js .visible .vs li:nth-child(7){transition-delay:.46s}
-.js .visible .vs li:nth-child(8){transition-delay:.52s}
 @keyframes failsafe{to{opacity:1;transform:none}}
 
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  .js .reveal,.js .steps li,.js .vs li{opacity:1!important;transform:none!important;transition:none!important}
+  .js .reveal,.js .steps li,.js .vs li,.js .stage .inner{
+    opacity:1!important;transform:none!important;transition:none!important}
   .js .vs-col,.js .device{transform:none!important}
-  .rise{opacity:1;transform:none;animation:none}
-  .hero .rule{width:74px;animation:none}
-  .hero::before,.cta::before,.marquee .track,.cube,.plate{animation:none}
-  .trade svg *{stroke-dashoffset:0!important;transition:none}
+  .marquee .track,.cta::before{animation:none}
+  .trade svg path{stroke-dashoffset:0!important;transition:none}
   .label::after,.steps li::after,.bar-fill{transform:none!important;transition:none}
   .btn:hover,.plan:hover,.trade:hover{transform:none}
   .progress,.scrolldown{display:none}
 }
-.rise{opacity:0;transform:translateY(28px);animation:rise 1.05s var(--ease) forwards}
-.rise:nth-child(1){animation-delay:.10s}
-.rise:nth-child(3){animation-delay:.44s}
-.rise:nth-child(4){animation-delay:.62s}
-.rise:nth-child(5){animation-delay:.80s}
-@keyframes rise{to{opacity:1;transform:none}}
 </style>
 </head>
 <body>
+
+<canvas id="gl" aria-hidden="true"></canvas>
+<div class="nogl" id="nogl" aria-hidden="true"></div>
 
 <div class="progress" id="progress"></div>
 <div class="frame" aria-hidden="true"></div>
 <div class="edge l" aria-hidden="true">MISEBA / WEB SITE</div>
 <div class="edge r" aria-hidden="true">SCROLL</div>
+<div class="scrolldown" id="scrolldown" aria-hidden="true"></div>
 
 <div class="top" id="top-bar">
   <div class="wrap">
@@ -468,46 +418,51 @@ footer .fnote{margin-top:20px;font-size:.78rem;color:#6D6A64}
   </div>
 </div>
 
-<header class="hero" id="top">
-  <!-- 奥に浮かぶ立体。マウスとスクロールで視差が動く -->
-  <div class="depth" id="depth" aria-hidden="true">
-    <div class="float a" data-d="26">
-      <div class="cube">
-        <div class="face"><svg viewBox="0 0 24 24"><path d="M3 12 12 4l9 8"/><path d="M5.5 12v8h13v-8"/></svg></div>
-        <div class="face"><svg viewBox="0 0 24 24"><path d="M7 8h5a3 3 0 0 1 3 3v1"/><path d="M9 5v3"/><path d="M18 13c0 2.2-1.6 4-1.6 4S15 15.2 15 13a1.6 1.6 0 0 1 3 0z"/></svg></div>
-        <div class="face"><svg viewBox="0 0 24 24"><path d="M4 20V9l8-5 8 5v11z"/><path d="M4 14h16"/><path d="M12 9v11"/></svg></div>
-        <div class="face"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></div>
-        <div class="face"><svg viewBox="0 0 24 24"><path d="M12 21c0-6 4-10 9-11 0 6-4 10-9 11z"/><path d="M12 21c0-4-3-7-7-8 0 4 3 7 7 8z"/></svg></div>
-        <div class="face"><svg viewBox="0 0 24 24"><path d="M4 6h16v12H4z"/><path d="M4 9h16"/></svg></div>
+<!-- ============ 3Dの上に重なる4画面 ============ -->
+<div class="stages" id="stages">
+  <section class="stage" id="top">
+    <div class="wrap"><div class="inner">
+      <div class="idx">01 &nbsp;MISEBA</div>
+      <h2>見てから、<br><span class="ac">決めてください。</span></h2>
+      <p>ホームページをまだお持ちでない小さなお店へ。ご依頼をいただく前に、
+         そのお店のための試作ページをお作りしてお見せします。費用はかかりません。</p>
+      <div class="btn-row">
+        <a href="https://lin.ee/VGyzGYv" class="btn btn-line"><span>LINEで相談する</span></a>
+        <a href="#works" class="btn btn-ghost"><span>作例を見る</span></a>
       </div>
-    </div>
-    <div class="float b" data-d="16"><div class="plate"></div></div>
-    <div class="float c" data-d="38">
-      <div class="cube sm">
-        <div class="face"><svg viewBox="0 0 24 24"><path d="M3 12 12 4l9 8"/></svg></div>
-        <div class="face"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></div>
-        <div class="face"><svg viewBox="0 0 24 24"><path d="M4 20V9l8-5 8 5v11z"/></svg></div>
-        <div class="face"><svg viewBox="0 0 24 24"><path d="M9 5v3"/><path d="M7 8h5a3 3 0 0 1 3 3"/></svg></div>
-        <div class="face"><svg viewBox="0 0 24 24"><path d="M12 21c0-6 4-10 9-11 0 6-4 10-9 11z"/></svg></div>
-        <div class="face"><svg viewBox="0 0 24 24"><path d="M4 6h16v12H4z"/></svg></div>
-      </div>
-    </div>
-  </div>
+    </div></div>
+  </section>
 
-  <div class="wrap">
-    <div class="eyebrow rise">MISEBA</div>
-    <div class="rule"></div>
-    <h1 class="rise">見てから、<br><span class="accent">決めてください。</span></h1>
-    <p class="rise">ホームページをまだお持ちでない小さなお店へ。
-       ご依頼をいただく前に、そのお店のための試作ページをお作りしてお見せします。
-       気に入らなければ、そのままお断りいただいて構いません。費用はかかりません。</p>
-    <div class="btn-row rise">
-      <a href="https://lin.ee/VGyzGYv" class="btn btn-line"><span>LINEで相談する</span></a>
-      <a href="#works" class="btn btn-ghost"><span>作例を見る</span></a>
-    </div>
-  </div>
-  <div class="scrolldown" aria-hidden="true"></div>
-</header>
+  <section class="stage">
+    <div class="wrap"><div class="inner">
+      <div class="idx">02 &nbsp;PROBLEM</div>
+      <h2>調べたお客さまは、<br><span class="ac">材料のある店へ。</span></h2>
+      <p>電話をかける前に「このお店で大丈夫か」を確かめようとします。
+         確かめる材料がないと、材料のあるお店に流れます。</p>
+    </div></div>
+  </section>
+
+  <section class="stage">
+    <div class="wrap"><div class="inner">
+      <div class="idx">03 &nbsp;PRICE</div>
+      <h2>初期 <span class="ac">50,000円</span><br>月額 <span class="ac">5,000円</span></h2>
+      <p>制作会社に頼めば15〜65万円が相場です。
+         ミセバは試作を先にお見せするので、見てから決められます。</p>
+    </div></div>
+  </section>
+
+  <section class="stage">
+    <div class="wrap"><div class="inner">
+      <div class="idx">04 &nbsp;CONTACT</div>
+      <h2>まずは、<br><span class="ac">聞いてみるだけでも。</span></h2>
+      <p>やりとりはLINEで完結します。会ってお打ち合わせをする必要はないので、
+         全国どこのお店でも対応できます。</p>
+      <div class="btn-row">
+        <a href="https://lin.ee/VGyzGYv" class="btn btn-line"><span>LINEで相談する</span></a>
+      </div>
+    </div></div>
+  </section>
+</div>
 
 <div class="marquee" aria-hidden="true">
   <div class="track">
@@ -520,9 +475,10 @@ footer .fnote{margin-top:20px;font-size:.78rem;color:#6D6A64}
   </div>
 </div>
 
+<!-- ============ ここから読ませる部分 ============ -->
+<div class="doc">
 <main>
 
-  <!-- ============ 01 ============ -->
   <section>
     <div class="wrap narrow reveal">
       <div class="label">01 &nbsp;&nbsp;ABOUT</div>
@@ -540,37 +496,20 @@ footer .fnote{margin-top:20px;font-size:.78rem;color:#6D6A64}
     </div>
   </section>
 
-  <!-- ============ 02 業種 ============ -->
   <section style="padding-top:0">
     <div class="wrap reveal">
       <div class="label">02 &nbsp;&nbsp;TRADES</div>
       <h2>こういうお店を得意にしています</h2>
       <div class="trades">
-        <div class="trade">
-          <svg viewBox="0 0 24 24"><path d="M3 12 12 4l9 8"/><path d="M5.5 12v8h13v-8"/></svg>
-          <b>屋根工事</b>
-        </div>
-        <div class="trade">
-          <svg viewBox="0 0 24 24"><path d="M7 8h5a3 3 0 0 1 3 3v1"/><path d="M9 5v3"/><path d="M18 13c0 2.2-1.6 4-1.6 4S15 15.2 15 13a1.6 1.6 0 0 1 3 0z"/></svg>
-          <b>水道工事</b>
-        </div>
-        <div class="trade">
-          <svg viewBox="0 0 24 24"><path d="M4 20V9l8-5 8 5v11z"/><path d="M4 14h16"/><path d="M12 9v11"/></svg>
-          <b>工務店</b>
-        </div>
-        <div class="trade">
-          <svg viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>
-          <b>電気工事</b>
-        </div>
-        <div class="trade">
-          <svg viewBox="0 0 24 24"><path d="M12 21c0-6 4-10 9-11 0 6-4 10-9 11z"/><path d="M12 21c0-4-3-7-7-8 0 4 3 7 7 8z"/></svg>
-          <b>リラクゼーション</b>
-        </div>
+        <div class="trade"><svg viewBox="0 0 24 24"><path d="M3 12 12 4l9 8"/><path d="M5.5 12v8h13v-8"/></svg><b>屋根工事</b></div>
+        <div class="trade"><svg viewBox="0 0 24 24"><path d="M7 8h5a3 3 0 0 1 3 3v1"/><path d="M9 5v3"/><path d="M18 13c0 2.2-1.6 4-1.6 4S15 15.2 15 13a1.6 1.6 0 0 1 3 0z"/></svg><b>水道工事</b></div>
+        <div class="trade"><svg viewBox="0 0 24 24"><path d="M4 20V9l8-5 8 5v11z"/><path d="M4 14h16"/><path d="M12 9v11"/></svg><b>工務店</b></div>
+        <div class="trade"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg><b>電気工事</b></div>
+        <div class="trade"><svg viewBox="0 0 24 24"><path d="M12 21c0-6 4-10 9-11 0 6-4 10-9 11z"/><path d="M12 21c0-4-3-7-7-8 0 4 3 7 7 8z"/></svg><b>リラクゼーション</b></div>
       </div>
     </div>
   </section>
 
-  <!-- ============ 03 ============ -->
   <section id="diff">
     <div class="wrap reveal">
       <div class="label">03 &nbsp;&nbsp;DIFFERENCE</div>
@@ -580,7 +519,6 @@ footer .fnote{margin-top:20px;font-size:.78rem;color:#6D6A64}
         <strong>確かめる材料がないと、材料のあるお店に流れます。</strong>
         Googleマップだけの場合と、ホームページがある場合とで、
         お客さまが知ることのできる情報を並べてみました。</p>
-
       <div class="vs">
         <div class="vs-col">
           <div class="vs-head">Googleマップだけの場合</div>
@@ -611,7 +549,6 @@ footer .fnote{margin-top:20px;font-size:.78rem;color:#6D6A64}
           </ul>
         </div>
       </div>
-
       <div class="note" style="margin-top:28px">
         <p class="small" style="margin-bottom:0">
           ある調査では、<strong>小規模事業者のホームページ開設率は約50%</strong>とされています。
@@ -622,7 +559,6 @@ footer .fnote{margin-top:20px;font-size:.78rem;color:#6D6A64}
     </div>
   </section>
 
-  <!-- ============ 04 作例 ============ -->
   <section id="works">
     <div class="wrap reveal">
       <div class="label">04 &nbsp;&nbsp;WORKS</div>
@@ -631,7 +567,6 @@ footer .fnote{margin-top:20px;font-size:.78rem;color:#6D6A64}
         業種ごとに見本を用意しました。下のボタンで切り替わります。
         <strong>「会社名」と書いてある場所に、お店の名前が入ります。</strong>
         写真・お仕事の内容・営業時間も、すべてお店のものに置き換えてお作りします。</p>
-
       <div class="tabs" role="tablist" id="demo-tabs">
         <button class="tab is-on" role="tab" aria-selected="true"  data-key="roofing"      data-label="屋根工事店">屋根工事</button>
         <button class="tab"       role="tab" aria-selected="false" data-key="plumbing"     data-label="水道工事店">水道工事</button>
@@ -639,8 +574,7 @@ footer .fnote{margin-top:20px;font-size:.78rem;color:#6D6A64}
         <button class="tab"       role="tab" aria-selected="false" data-key="electrical"   data-label="電気工事店">電気工事</button>
         <button class="tab"       role="tab" aria-selected="false" data-key="relaxation"   data-label="リラクゼーションサロン">リラクゼーション</button>
       </div>
-
-      <div class="stage">
+      <div class="pstage">
         <div class="device" id="device">
           <div class="browser">
             <div class="bar">
@@ -661,42 +595,30 @@ footer .fnote{margin-top:20px;font-size:.78rem;color:#6D6A64}
     </div>
   </section>
 
-  <!-- ============ 05 ============ -->
   <section id="how">
     <div class="wrap narrow reveal">
       <div class="label">05 &nbsp;&nbsp;FLOW</div>
       <h2>進め方</h2>
       <ol class="steps">
-        <li>
-          <h3>ご連絡をいただきます</h3>
+        <li><h3>ご連絡をいただきます</h3>
           <p>LINEかメールで「うちの店だとどんな感じになる？」とお送りください。
-             お店の名前と、だいたいの場所を教えていただければ十分です。</p>
-        </li>
-        <li>
-          <h3>試作ページをお見せします</h3>
-          <p>1枚のページをお作りしてお届けします。
-             <strong>この時点では費用は一切かかりません。</strong>
-             見て「いらない」と思われたら、そこで終わりで構いません。</p>
-        </li>
-        <li>
-          <h3>直して、公開します</h3>
+             お店の名前と、だいたいの場所を教えていただければ十分です。</p></li>
+        <li><h3>試作ページをお見せします</h3>
+          <p>1枚のページをお作りしてお届けします。<strong>この時点では費用は一切かかりません。</strong>
+             見て「いらない」と思われたら、そこで終わりで構いません。</p></li>
+        <li><h3>直して、公開します</h3>
           <p>載せたい写真や文章、直したいところをお聞かせください。
-             ご希望に合わせて作り直したうえで、正式に公開します。修正は2回まで費用に含まれます。</p>
-        </li>
-        <li>
-          <h3>公開後もお手伝いします</h3>
-          <p>月1回程度の内容の更新、Googleマップの口コミへの返信のお手伝いなどを承ります。</p>
-        </li>
+             ご希望に合わせて作り直したうえで、正式に公開します。修正は2回まで費用に含まれます。</p></li>
+        <li><h3>公開後もお手伝いします</h3>
+          <p>月1回程度の内容の更新、Googleマップの口コミへの返信のお手伝いなどを承ります。</p></li>
       </ol>
     </div>
   </section>
 
-  <!-- ============ 06 ============ -->
   <section id="price">
     <div class="wrap reveal">
       <div class="label">06 &nbsp;&nbsp;PRICE</div>
       <h2>費用</h2>
-
       <div class="plans">
         <div class="plan">
           <div class="cap">はじめにかかる費用</div>
@@ -712,7 +634,6 @@ footer .fnote{margin-top:20px;font-size:.78rem;color:#6D6A64}
             1ヶ月前にご連絡いただければ、いつでもやめられます。</div>
         </div>
       </div>
-
       <div class="plan monitor" style="margin-bottom:38px">
         <div class="cap">はじめの3件のみ</div>
         <div class="amt"><span class="was">50,000円</span><span class="num" data-to="30000">30,000</span><small>円</small></div>
@@ -723,82 +644,44 @@ footer .fnote{margin-top:20px;font-size:.78rem;color:#6D6A64}
       </div>
 
       <h3 style="font-family:var(--serif);font-size:1.2rem;margin-bottom:16px">制作会社・フリーランスに頼んだ場合との比較</h3>
-
       <div class="bars">
         <div class="cap">はじめにかかる費用の幅（帯の長さ＝金額の幅。横軸 0〜65万円）</div>
         <div class="bar-row mine">
           <div class="bar-name">ミセバ</div>
           <div class="bar-track" title="ミセバ：3万円（はじめの3件）〜5万円">
-            <div class="bar-fill own" style="left:4.6%;width:3.1%"></div>
-          </div>
+            <div class="bar-fill own" style="left:4.6%;width:3.1%"></div></div>
           <div class="bar-val">3〜5万円</div>
         </div>
         <div class="bar-row">
           <div class="bar-name">制作会社</div>
           <div class="bar-track" title="制作会社：15〜65万円">
-            <div class="bar-fill" style="left:23.1%;width:76.9%"></div>
-          </div>
+            <div class="bar-fill" style="left:23.1%;width:76.9%"></div></div>
           <div class="bar-val">15〜65万円</div>
         </div>
         <div class="bar-row">
           <div class="bar-name">フリーランス</div>
           <div class="bar-track" title="フリーランス：30万円ほど">
-            <div class="bar-fill" style="left:45.4%;width:1.6%"></div>
-          </div>
+            <div class="bar-fill" style="left:45.4%;width:1.6%"></div></div>
           <div class="bar-val">30万円ほど</div>
         </div>
         <div class="axis"><span>0円</span><span>65万円</span></div>
         <p class="small" style="margin-top:8px">
-          帯の左端が下限、右端が上限です。フリーランスは幅の情報がないため、
-          目安の1点だけを示しています。</p>
+          帯の左端が下限、右端が上限です。フリーランスは幅の情報がないため、目安の1点だけを示しています。</p>
       </div>
 
       <p class="scroll-hint">← 横にスクロールできます</p>
       <div class="tablewrap">
         <table class="cmp">
-          <thead>
-            <tr>
-              <th></th>
-              <th class="own">ミセバ</th>
-              <th>制作会社に頼む</th>
-              <th>フリーランスに頼む</th>
-            </tr>
-          </thead>
+          <thead><tr><th></th><th class="own">ミセバ</th><th>制作会社に頼む</th><th>フリーランスに頼む</th></tr></thead>
           <tbody>
-            <tr>
-              <th>はじめの費用</th>
-              <td class="own">50,000円<span class="tag-best">最安級</span></td>
-              <td>15〜65万円</td>
-              <td>30万円ほど</td>
-            </tr>
-            <tr>
-              <th>月額</th>
-              <td class="own">5,000円<br><span class="small">更新・口コミ返信込み</span></td>
-              <td>1.3〜2.2万円</td>
-              <td>別途相談</td>
-            </tr>
-            <tr>
-              <th>5年間の合計</th>
-              <td class="own">35万円</td>
-              <td>160万円ほど</td>
-              <td>45万円ほど</td>
-            </tr>
-            <tr>
-              <th>かかる手間</th>
-              <td class="own">写真と文章の<br>確認だけ</td>
-              <td>打ち合わせ数回</td>
-              <td>打ち合わせ数回</td>
-            </tr>
-            <tr>
-              <th>見てから<br>決められるか</th>
-              <td class="own">できます<br><span class="small">試作を先にお見せします</span></td>
-              <td>契約してから制作</td>
-              <td>契約してから制作</td>
-            </tr>
+            <tr><th>はじめの費用</th><td class="own">50,000円<span class="tag-best">最安級</span></td><td>15〜65万円</td><td>30万円ほど</td></tr>
+            <tr><th>月額</th><td class="own">5,000円<br><span class="small">更新・口コミ返信込み</span></td><td>1.3〜2.2万円</td><td>別途相談</td></tr>
+            <tr><th>5年間の合計</th><td class="own">35万円</td><td>160万円ほど</td><td>45万円ほど</td></tr>
+            <tr><th>かかる手間</th><td class="own">写真と文章の<br>確認だけ</td><td>打ち合わせ数回</td><td>打ち合わせ数回</td></tr>
+            <tr><th>見てから<br>決められるか</th><td class="own">できます<br><span class="small">試作を先にお見せします</span></td><td>契約してから制作</td><td>契約してから制作</td></tr>
           </tbody>
         </table>
       </div>
-
       <p class="small" style="margin-top:16px">
         ※ 比較欄の金額は、2026年8月時点で公開されている複数の制作会社の費用相場の記事を参考にした目安です。
         依頼先やページ数によって変わります。ミセバ以外の金額は、こちらが保証するものではありません。
@@ -806,36 +689,26 @@ footer .fnote{margin-top:20px;font-size:.78rem;color:#6D6A64}
     </div>
   </section>
 
-  <!-- ============ 07 ============ -->
   <section id="why">
     <div class="wrap narrow reveal">
       <div class="label">07 &nbsp;&nbsp;REASON</div>
       <h2>なぜこの価格でできるのか</h2>
       <p class="lead">安すぎると、かえって不安だと思います。理由は3つあります。</p>
       <ol class="steps" style="margin-top:28px">
-        <li>
-          <h3>個人でやっているから</h3>
+        <li><h3>個人でやっているから</h3>
           <p>事務所も、営業の人も、間に入る人もいません。
-             やりとりは最初から最後まで直接です。そのぶん費用がかかりません。</p>
-        </li>
-        <li>
-          <h3>1ページに絞っているから</h3>
+             やりとりは最初から最後まで直接です。そのぶん費用がかかりません。</p></li>
+        <li><h3>1ページに絞っているから</h3>
           <p>小さなお店に必要なことは、たいてい1ページに収まります。
-             何ページも作らないぶん、早く、安くできます。
-             必要になったら、あとから増やせます。</p>
-        </li>
-        <li>
-          <h3>打ち合わせをしないから</h3>
+             何ページも作らないぶん、早く、安くできます。必要になったら、あとから増やせます。</p></li>
+        <li><h3>打ち合わせをしないから</h3>
           <p>制作でいちばん時間がかかるのは、実は打ち合わせです。
              ミセバは<strong>先に試作をお見せしてから、直したいところだけを伺う</strong>やり方なので、
-             何度も集まる必要がありません。やりとりはLINEで完結します。
-             そのぶん費用を抑えられます。</p>
-        </li>
+             何度も集まる必要がありません。やりとりはLINEで完結します。そのぶん費用を抑えられます。</p></li>
       </ol>
     </div>
   </section>
 
-  <!-- ============ 08 ============ -->
   <section id="about">
     <div class="wrap narrow reveal">
       <div class="label">08 &nbsp;&nbsp;INFORMATION</div>
@@ -861,7 +734,6 @@ footer .fnote{margin-top:20px;font-size:.78rem;color:#6D6A64}
     </div>
   </section>
 
-  <!-- ============ 09 ============ -->
   <section class="cta" id="contact">
     <div class="wrap narrow reveal">
       <div class="label">09 &nbsp;&nbsp;CONTACT</div>
@@ -872,8 +744,7 @@ footer .fnote{margin-top:20px;font-size:.78rem;color:#6D6A64}
         <a href="https://lin.ee/VGyzGYv" class="btn btn-line"><span>LINEで相談する</span></a>
         <a href="mailto:onikudaisuki1388@gmail.com" class="btn btn-ghost"><span>メールで相談する</span></a>
       </div>
-      <p class="small" style="margin-top:28px">
-        お返事は数日いただくことがあります。あらかじめご了承ください。</p>
+      <p class="small" style="margin-top:28px">お返事は数日いただくことがあります。あらかじめご了承ください。</p>
     </div>
   </section>
 
@@ -882,39 +753,196 @@ footer .fnote{margin-top:20px;font-size:.78rem;color:#6D6A64}
 <footer>
   <div class="wrap">
     <p><strong class="mark">ミセバ</strong>　（個人事業）</p>
-    <p>
-      <a href="https://lin.ee/VGyzGYv">LINEで相談する</a>
-      　/
-      <a href="mailto:onikudaisuki1388@gmail.com">onikudaisuki1388@gmail.com</a>
-    </p>
+    <p><a href="https://lin.ee/VGyzGYv">LINEで相談する</a>　/　<a href="mailto:onikudaisuki1388@gmail.com">onikudaisuki1388@gmail.com</a></p>
     <p class="fnote">本サービスは事業者さま向けのサービスです。<br>
       所在地・電話番号はご請求により遅滞なくお知らせします。</p>
   </div>
 </footer>
+</div>
 
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
+/* ================= 3D（Three.js）=================
+   スクロールに合わせてカメラが対象を360度まわり、
+   画面ごとに素材の色が滑らかに変わる。
+   WebGLが使えない・動きを減らす設定のときは、静止した背景に切り替える。 */
+(function(){
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var coarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+  var canvas = document.getElementById('gl');
+  var fallback = document.getElementById('nogl');
+
+  function giveUp(){
+    if(canvas) canvas.classList.add('gone');
+    if(fallback) fallback.classList.add('on');
+  }
+  if(reduce || !window.THREE || !canvas){ giveUp(); return; }
+
+  var renderer;
+  try{
+    renderer = new THREE.WebGLRenderer({canvas:canvas, antialias:!coarse, alpha:false});
+  }catch(e){ giveUp(); return; }
+  if(!renderer || !renderer.getContext()){ giveUp(); return; }
+
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1, coarse?1.5:2));
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.outputEncoding = THREE.sRGBEncoding;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.05;
+  renderer.shadowMap.enabled = !coarse;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+  var scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x07080A);
+  scene.fog = new THREE.Fog(0x07080A, 7, 17);
+
+  var camera = new THREE.PerspectiveCamera(42, window.innerWidth/window.innerHeight, 0.1, 100);
+
+  /* --- 金属の映り込み用の環境。画像を読まず、その場で作る --- */
+  function envTexture(){
+    var c = document.createElement('canvas');
+    c.width = 512; c.height = 256;
+    var g = c.getContext('2d');
+    var grd = g.createLinearGradient(0,0,0,256);
+    grd.addColorStop(0.00,'#2a3140');
+    grd.addColorStop(0.42,'#0d1015');
+    grd.addColorStop(0.55,'#1a1e26');
+    grd.addColorStop(1.00,'#05060a');
+    g.fillStyle = grd; g.fillRect(0,0,512,256);
+    /* 上部に光源らしい明るい帯を置くと金属らしく映り込む */
+    var s1 = g.createRadialGradient(150,54,4,150,54,120);
+    s1.addColorStop(0,'rgba(255,238,210,.95)'); s1.addColorStop(1,'rgba(255,238,210,0)');
+    g.fillStyle = s1; g.fillRect(0,0,512,256);
+    var s2 = g.createRadialGradient(388,86,4,388,86,140);
+    s2.addColorStop(0,'rgba(150,190,255,.55)'); s2.addColorStop(1,'rgba(150,190,255,0)');
+    g.fillStyle = s2; g.fillRect(0,0,512,256);
+    var t = new THREE.CanvasTexture(c);
+    t.mapping = THREE.EquirectangularReflectionMapping;
+    t.encoding = THREE.sRGBEncoding;
+    return t;
+  }
+  var pmrem = new THREE.PMREMGenerator(renderer);
+  pmrem.compileEquirectangularShader();
+  var envRT = pmrem.fromEquirectangular(envTexture());
+  scene.environment = envRT.texture;
+
+  /* --- 対象：クロームのトーラスノット --- */
+  var geo = new THREE.TorusKnotGeometry(1.15, 0.36, coarse?150:260, coarse?20:36);
+  var mat = new THREE.MeshPhysicalMaterial({
+    color: 0xC8CCD2, metalness: 1.0, roughness: 0.14,
+    clearcoat: 0.7, clearcoatRoughness: 0.22, envMapIntensity: 1.35
+  });
+  var knot = new THREE.Mesh(geo, mat);
+  knot.castShadow = !coarse;
+  scene.add(knot);
+
+  /* --- 二灯のスポットライト --- */
+  var key = new THREE.SpotLight(0xFFE7C2, 90, 26, Math.PI/5.2, 0.55, 1.4);
+  key.position.set(5.2, 6.4, 4.2);
+  key.castShadow = !coarse;
+  if(!coarse){ key.shadow.mapSize.width = 1024; key.shadow.mapSize.height = 1024;
+               key.shadow.bias = -0.0012; }
+  scene.add(key);
+  var rim = new THREE.SpotLight(0x7FA9FF, 55, 26, Math.PI/4.6, 0.7, 1.5);
+  rim.position.set(-6.0, 2.6, -3.4);
+  scene.add(rim);
+  scene.add(new THREE.AmbientLight(0x2A3040, 0.7));
+
+  /* --- 床に落ちる柔らかい影 --- */
+  var ground = new THREE.Mesh(
+    new THREE.PlaneGeometry(40, 40),
+    new THREE.ShadowMaterial({opacity: 0.42})
+  );
+  ground.rotation.x = -Math.PI/2;
+  ground.position.y = -2.5;
+  ground.receiveShadow = true;
+  scene.add(ground);
+
+  /* --- 画面ごとの色（銀・深い青・翠・銅） --- */
+  var COLORS = [0xC8CCD2, 0x1E3E8C, 0x0E7C5A, 0xB06A34].map(function(h){ return new THREE.Color(h); });
+
+  var stages = document.getElementById('stages');
+  var cur = {a:0, y:0, col:new THREE.Color(COLORS[0])};
+  var tgt = {a:0, y:0, i:0};
+  var running = true;
+
+  function lerp(a,b,t){ return a + (b-a)*t; }
+
+  function computeTargets(){
+    var h = stages ? stages.offsetHeight - window.innerHeight : 1;
+    var y = window.scrollY || window.pageYOffset;
+    var p = Math.max(0, Math.min(1, h>0 ? y/h : 0));   /* 0→1 */
+    tgt.a = p * Math.PI * 2;                            /* 360度まわる */
+    tgt.y = p * 1.4 - 0.5;
+    tgt.i = Math.max(0, Math.min(3, Math.round(p*3)));
+    /* 読ませる部分に入ったら描画を止めて電池を使わない */
+    running = y < (stages ? stages.offsetHeight + window.innerHeight*0.5 : 1e9);
+    var sd = document.getElementById('scrolldown');
+    if(sd) sd.classList.toggle('hide', y > window.innerHeight*0.6);
+  }
+
+  var t0 = 0;
+  function frame(t){
+    requestAnimationFrame(frame);
+    if(!running) return;
+    var dt = Math.min((t - t0)/1000, 0.05); t0 = t;
+
+    /* なめらかに追従させる（lerp） */
+    cur.a = lerp(cur.a, tgt.a, 0.06);
+    cur.y = lerp(cur.y, tgt.y, 0.06);
+    cur.col.lerp(COLORS[tgt.i], 0.035);
+    mat.color.copy(cur.col);
+    /* 銀のときだけ映り込みを強めて「クローム」らしく見せる */
+    mat.envMapIntensity = lerp(mat.envMapIntensity, tgt.i===0 ? 1.6 : 1.15, 0.05);
+
+    var R = 6.2;
+    camera.position.set(Math.sin(cur.a)*R, 1.1 + cur.y, Math.cos(cur.a)*R);
+    camera.lookAt(0, 0, 0);
+
+    knot.rotation.y += dt*0.22;
+    knot.rotation.x  = Math.sin(t*0.00022)*0.22;
+    knot.position.y  = Math.sin(t*0.0007)*0.16;
+
+    renderer.render(scene, camera);
+  }
+
+  function resize(){
+    var w = window.innerWidth, h = window.innerHeight;
+    camera.aspect = w/h;
+    /* 画面が横長のときは描画を左にずらし、対象を右半分へ寄せる。
+       左に空いた場所へ文字を置くと読みやすい。 */
+    if(w >= 820){ camera.setViewOffset(w, h, -w*0.19, 0, w, h); }
+    else { camera.clearViewOffset(); }
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio||1, coarse?1.5:2));
+    computeTargets();
+  }
+
+  window.addEventListener('scroll', computeTargets, {passive:true});
+  window.addEventListener('resize', resize, {passive:true});
+  resize();
+  requestAnimationFrame(frame);
+})();
+
+/* ================= ページ側の動き ================= */
 (function(){
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var coarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
 
-  /* --- なめらかスクロール。読み込めなくても普通のスクロールで動く --- */
-  if(!reduce && window.Lenis){
-    try{
-      var lenis = new window.Lenis({ lerp:0.1, smoothWheel:true, syncTouch:false });
-      var raf = function(t){ lenis.raf(t); requestAnimationFrame(raf); };
-      requestAnimationFrame(raf);
-      document.documentElement.style.scrollBehavior = 'auto';
-      document.querySelectorAll('a[href^="#"]').forEach(function(a){
-        a.addEventListener('click', function(e){
-          var el = document.querySelector(a.getAttribute('href'));
-          if(el){ e.preventDefault(); lenis.scrollTo(el, {offset:-70}); }
-        });
-      });
-    }catch(e){}
+  /* --- 4画面の文字を順に出す --- */
+  var stages = document.querySelectorAll('.stage');
+  if(reduce || !('IntersectionObserver' in window)){
+    stages.forEach(function(s){ s.classList.add('on'); });
+  } else {
+    var sio = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting) en.target.classList.add('on'); });
+    },{threshold:.35});
+    stages.forEach(function(s){ sio.observe(s); });
+    window.setTimeout(function(){ stages.forEach(function(s){ s.classList.add('on'); }); }, 3500);
   }
 
-  /* --- スクロール出現 --- */
+  /* --- 読ませる部分の出現 --- */
   var els = document.querySelectorAll('.reveal');
   function showAll(){ for(var i=0;i<els.length;i++){ els[i].classList.add('visible'); } }
   if(reduce || !('IntersectionObserver' in window)){
@@ -926,61 +954,46 @@ footer .fnote{margin-top:20px;font-size:.78rem;color:#6D6A64}
       });
     },{threshold:0,rootMargin:'0px 0px -6% 0px'});
     els.forEach(function(e){ io.observe(e); });
-    window.setTimeout(showAll, 3000);   /* 保険。CSS側にも4秒の保険がある */
+    window.setTimeout(showAll, 3000);
   }
 
-  /* --- 進捗バー・ヘッダー・奥行きの視差。すべてRAFで直接DOMに書く --- */
-  var bar   = document.getElementById('progress');
-  var top   = document.getElementById('top-bar');
-  var depth = document.getElementById('depth');
-  var floats = depth ? depth.querySelectorAll('.float') : [];
-  var mx = 0, my = 0, sy = 0, ticking = false, stuck = false;
-
-  function paint(){
-    ticking = false;
-    var h = document.documentElement.scrollHeight - window.innerHeight;
-    if(bar && h > 0){ bar.style.transform = 'scaleX(' + (sy/h) + ')'; }
-    var s = sy > 10;
-    if(top && s !== stuck){ stuck = s; top.classList.toggle('stuck', s); }
-    for(var i=0;i<floats.length;i++){
-      var d = parseFloat(floats[i].getAttribute('data-d')) || 20;
-      var tx = mx * d, ty = my * d - sy * (d * 0.05);
-      floats[i].style.transform = 'translate3d(' + tx.toFixed(1) + 'px,' + ty.toFixed(1) + 'px,0)';
-    }
+  /* --- 進捗バーとヘッダー --- */
+  var bar = document.getElementById('progress');
+  var top = document.getElementById('top-bar');
+  var ticking = false, stuck = false;
+  function onScroll(){
+    if(ticking) return;
+    ticking = true;
+    requestAnimationFrame(function(){
+      var h = document.documentElement.scrollHeight - window.innerHeight;
+      var y = window.scrollY || window.pageYOffset;
+      if(bar && h>0){ bar.style.transform = 'scaleX(' + (y/h) + ')'; }
+      var s = y > 10;
+      if(top && s !== stuck){ stuck = s; top.classList.toggle('stuck', s); }
+      ticking = false;
+    });
   }
-  function schedule(){ if(!ticking){ ticking = true; requestAnimationFrame(paint); } }
-
-  window.addEventListener('scroll', function(){ sy = window.scrollY || window.pageYOffset; schedule(); }, {passive:true});
-  if(!reduce && !coarse){
-    window.addEventListener('mousemove', function(e){
-      mx = (e.clientX / window.innerWidth  - .5) * 2;
-      my = (e.clientY / window.innerHeight - .5) * 2;
-      schedule();
-    }, {passive:true});
-  }
-  sy = window.scrollY || window.pageYOffset; paint();
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
 
   /* --- 作例の端末をマウスで少し傾ける --- */
   var device = document.getElementById('device');
   if(device && !reduce && !coarse){
-    var stage = device.parentNode, dTick = false, dx = 0, dy = 0;
-    stage.addEventListener('mousemove', function(e){
-      var r = stage.getBoundingClientRect();
-      dx = ((e.clientX - r.left) / r.width  - .5) * 2;
-      dy = ((e.clientY - r.top ) / r.height - .5) * 2;
+    var st = device.parentNode, dTick = false;
+    st.addEventListener('mousemove', function(e){
+      var r = st.getBoundingClientRect();
+      var dx = ((e.clientX - r.left)/r.width - .5)*2;
+      var dy = ((e.clientY - r.top )/r.height - .5)*2;
       if(!dTick){
         dTick = true;
         requestAnimationFrame(function(){
           dTick = false;
-          if(!device.parentNode.closest('.reveal').classList.contains('visible')) return;
           device.style.transform =
             'rotateX(' + (6 - dy*5).toFixed(2) + 'deg) rotateY(' + (dx*7).toFixed(2) + 'deg) scale(1)';
         });
       }
     }, {passive:true});
-    stage.addEventListener('mouseleave', function(){
-      device.style.transform = '';
-    });
+    st.addEventListener('mouseleave', function(){ device.style.transform=''; });
   }
 
   /* --- 金額のカウントアップ --- */
@@ -994,10 +1007,10 @@ footer .fnote{margin-top:20px;font-size:.78rem;color:#6D6A64}
         var dur = 1000, t0 = null;
         function step(t){
           if(!t0) t0 = t;
-          var k = Math.min((t - t0) / dur, 1);
-          var e = 1 - Math.pow(1 - k, 3);
-          el.textContent = Math.round(to * e).toLocaleString('ja-JP');
-          if(k < 1) requestAnimationFrame(step);
+          var k = Math.min((t-t0)/dur, 1);
+          var e = 1 - Math.pow(1-k, 3);
+          el.textContent = Math.round(to*e).toLocaleString('ja-JP');
+          if(k<1) requestAnimationFrame(step);
         }
         requestAnimationFrame(step);
       });
@@ -1005,21 +1018,17 @@ footer .fnote{margin-top:20px;font-size:.78rem;color:#6D6A64}
     nums.forEach(function(n){ nio.observe(n); });
   }
 
-  /* --- 作例タブの切り替え --- */
+  /* --- 作例タブ --- */
   var tabs = document.getElementById('demo-tabs');
   if(tabs){
     tabs.addEventListener('click', function(ev){
       var b = ev.target.closest('.tab');
       if(!b || b.classList.contains('is-on')) return;
-      var all = tabs.querySelectorAll('.tab');
-      for(var i=0;i<all.length;i++){
-        all[i].classList.remove('is-on');
-        all[i].setAttribute('aria-selected','false');
-      }
-      b.classList.add('is-on');
-      b.setAttribute('aria-selected','true');
-      var key = b.getAttribute('data-key');
-      var url = './demo/' + key + '/';
+      tabs.querySelectorAll('.tab').forEach(function(x){
+        x.classList.remove('is-on'); x.setAttribute('aria-selected','false');
+      });
+      b.classList.add('is-on'); b.setAttribute('aria-selected','true');
+      var key = b.getAttribute('data-key'), url = './demo/'+key+'/';
       var screen = document.getElementById('demo-screen');
       var frame  = document.getElementById('demo-frame');
       var label  = document.getElementById('demo-url');
