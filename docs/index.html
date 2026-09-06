@@ -81,63 +81,62 @@ a{color:inherit}
 .wrap{max-width:1120px;margin:0 auto;padding:0 26px}
 .narrow{max-width:760px}
 
-/* ================= 銀河のヒーロー（ここだけ暗い） ================= */
-.ghero{position:relative;height:100svh;min-height:560px;overflow:hidden;background:#0A0616}
-#gl{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:pan-y}
+/* ================= 流体グラデーションのヒーロー ================= */
+.fhero{position:relative;height:100svh;min-height:560px;overflow:hidden;background:#1A1740}
+/* シェーダーは低い解像度で描いてCSSで引き伸ばす。滑らかなので粗さは見えない */
+#gl{position:absolute;inset:0;width:100%;height:100%;display:block}
 #gl.gone{display:none}
 .nogl{position:absolute;inset:0;display:none;
   background:
-    radial-gradient(720px 460px at 50% 46%,rgba(255,178,89,.5),transparent 62%),
-    radial-gradient(980px 620px at 50% 50%,rgba(139,92,246,.34),transparent 68%),
-    #0A0616}
+    radial-gradient(760px 520px at 26% 30%,rgba(107,63,160,.85),transparent 66%),
+    radial-gradient(680px 460px at 76% 66%,rgba(255,107,90,.7),transparent 64%),
+    linear-gradient(140deg,#16265E,#3A2668 58%,#7A3350)}
 .nogl.on{display:block}
 
-/* 覆いはクリックを通す。銀河を後ろでドラッグできるようにするため */
-.gover{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-  pointer-events:none;padding:96px 26px 120px;text-align:center}
-/* 文字の後ろだけ暗く落として読めるようにする。クリックは通す */
-.gover::before{content:"";position:absolute;left:50%;top:50%;
-  width:min(1000px,116%);height:min(660px,86%);transform:translate(-50%,-50%);
-  background:radial-gradient(closest-side,rgba(10,6,22,.88),rgba(10,6,22,.62) 52%,rgba(10,6,22,0) 78%);
-  pointer-events:none}
-.ginner{max-width:44em;position:relative}
-.geyebrow{font-size:.64rem;letter-spacing:.5em;color:#E9C88A;font-weight:700;margin-bottom:26px;
-  opacity:0;animation:gin .9s var(--ease) .2s forwards}
-.ghead{font-family:var(--serif);font-weight:700;letter-spacing:.03em;color:#FBF7EF;
-  font-size:clamp(2.3rem,8vw,4.6rem);line-height:1.32;margin-bottom:24px;
-  text-shadow:0 4px 40px rgba(10,6,22,.9)}
-.ghead .ac{color:#E9C88A}
-.gsub{font-size:1.02rem;color:rgba(251,247,239,.94);margin-bottom:0;
-  text-shadow:0 2px 10px rgba(10,6,22,1),0 2px 26px rgba(10,6,22,.95);
-  opacity:0;animation:gin .9s var(--ease) .75s forwards}
-.gbtns{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:34px;
-  opacity:0;animation:gin .9s var(--ease) .95s forwards}
-/* ボタンだけクリックできるようにする */
-.gbtns .btn{pointer-events:auto}
-.btn-glass{border:1px solid rgba(251,247,239,.4);color:#FBF7EF;
-  background:rgba(251,247,239,.08);backdrop-filter:blur(6px)}
-.ghint{margin-top:26px;font-size:.74rem;letter-spacing:.18em;color:rgba(251,247,239,.5);
-  opacity:0;animation:gin .9s var(--ease) 1.4s forwards}
-@keyframes gin{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
-/* 下端を明るい本文へなじませる */
-.gfade{position:absolute;left:0;right:0;bottom:0;height:22vh;pointer-events:none;
-  background:linear-gradient(to bottom,rgba(10,6,22,0),var(--ink))}
+.fover{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  padding:96px 22px 120px}
+/* ガラスのカード */
+.glass{
+  max-width:44em;width:100%;text-align:center;
+  padding:clamp(30px,5vw,54px) clamp(22px,4vw,48px);
+  border-radius:20px;
+  background:rgba(255,255,255,.10);
+  border:1px solid rgba(255,255,255,.26);
+  backdrop-filter:blur(18px) saturate(140%);
+  -webkit-backdrop-filter:blur(18px) saturate(140%);
+  box-shadow:0 30px 80px -40px rgba(10,8,30,.8),inset 0 1px 0 rgba(255,255,255,.28);
+  animation:gin 1s var(--ease) .15s both;
+}
+.geyebrow{font-size:.64rem;letter-spacing:.5em;color:rgba(255,255,255,.86);
+  font-weight:700;margin-bottom:22px}
+.ghead{font-family:var(--serif);font-weight:700;letter-spacing:.03em;color:#FFFFFF;
+  font-size:clamp(2.1rem,7vw,4rem);line-height:1.34;margin-bottom:20px;
+  text-shadow:0 3px 30px rgba(16,10,40,.55)}
+.ghead .ac{color:#FFE1B8}
+.gsub{font-size:1.02rem;color:rgba(255,255,255,.92);margin-bottom:0;
+  text-shadow:0 2px 14px rgba(16,10,40,.6)}
+.gbtns{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:32px}
+.btn-glass{border:1px solid rgba(255,255,255,.5);color:#fff;
+  background:rgba(255,255,255,.14);backdrop-filter:blur(6px)}
+@keyframes gin{from{opacity:0;transform:translateY(22px) scale(.985)}to{opacity:1;transform:none}}
+.gfade{position:absolute;left:0;right:0;bottom:0;height:20vh;pointer-events:none;
+  background:linear-gradient(to bottom,rgba(26,23,64,0),var(--ink))}
 
 .scrolldown{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);z-index:3;
-  width:24px;height:38px;border:1px solid rgba(251,247,239,.42);border-radius:13px;
-  opacity:0;animation:fadeIn .9s var(--ease) 1.8s forwards;transition:opacity .5s;pointer-events:none}
+  width:24px;height:38px;border:1px solid rgba(255,255,255,.5);border-radius:13px;
+  opacity:0;animation:fadeIn .9s var(--ease) 1.5s forwards;transition:opacity .5s;pointer-events:none}
 .scrolldown.hide{opacity:0!important}
 .scrolldown::after{content:"";position:absolute;left:50%;top:8px;margin-left:-2px;
-  width:4px;height:4px;border-radius:50%;background:#E9C88A;
+  width:4px;height:4px;border-radius:50%;background:#FFE1B8;
   animation:wheel 2s var(--ease) infinite}
 @keyframes fadeIn{to{opacity:1}}
 @keyframes wheel{0%{transform:translateY(0);opacity:0}22%{opacity:1}
   70%{transform:translateY(15px);opacity:0}100%{opacity:0}}
 
-/* ヒーローの上ではヘッダーを明るい文字にする */
+/* ヒーローの上ではヘッダーを白文字にする */
 .top{position:fixed;top:0;left:0;right:0;z-index:70;background:transparent;
   border-bottom:1px solid transparent;transition:background .5s var(--ease),border-color .5s var(--ease)}
-.top .mark,.top nav a{color:#FBF7EF}
+.top .mark,.top nav a{color:#FFFFFF}
 .top.stuck{background:rgba(247,244,238,.9);backdrop-filter:saturate(150%) blur(14px);
   border-bottom-color:var(--line)}
 .top.stuck .mark{color:var(--paper)}
@@ -425,23 +424,21 @@ footer .fnote{margin-top:20px;font-size:.78rem;color:#6D6A64}
   </div>
 </div>
 
-<!-- ============ 銀河のヒーロー ============ -->
-<header class="ghero" id="top">
+<!-- ============ 流体グラデーションのヒーロー ============ -->
+<header class="fhero" id="top">
   <canvas id="gl"></canvas>
   <div class="nogl" id="nogl" aria-hidden="true"></div>
 
-  <!-- 覆いは pointer-events:none。銀河を後ろでドラッグできる -->
-  <div class="gover">
-    <div class="ginner">
+  <div class="fover">
+    <div class="glass">
       <div class="geyebrow">MISEBA</div>
       <h2 class="ghead">見てから、<br><span class="ac">決めてください。</span></h2>
-      <p class="gsub">ホームページをまだお持ちでない小さなお店へ。<br>
+      <p class="gsub">ホームページをまだお持ちでない小さなお店へ。
         ご依頼の前に、試作の1ページをお作りしてお見せします。費用はかかりません。</p>
       <div class="gbtns">
         <a href="https://lin.ee/VGyzGYv" class="btn btn-line"><span>LINEで相談する</span></a>
         <a href="#works" class="btn btn-glass"><span>作例を見る</span></a>
       </div>
-      <div class="ghint">ドラッグで回せます／ホイールで拡大</div>
     </div>
   </div>
   <div class="gfade" aria-hidden="true"></div>
@@ -748,17 +745,109 @@ footer .fnote{margin-top:20px;font-size:.78rem;color:#6D6A64}
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+
+<!-- 流体グラデーションのシェーダー -->
+<script id="fs" type="x-shader/x-fragment">
+precision highp float;
+uniform float uTime;
+uniform vec2  uRes;
+
+/* simplex noise 3D（Ashima / Stefan Gustavson の実装） */
+vec3 mod289(vec3 x){ return x - floor(x*(1.0/289.0))*289.0; }
+vec4 mod289(vec4 x){ return x - floor(x*(1.0/289.0))*289.0; }
+vec4 permute(vec4 x){ return mod289(((x*34.0)+1.0)*x); }
+vec4 taylorInvSqrt(vec4 r){ return 1.79284291400159 - 0.85373472095314*r; }
+
+float snoise(vec3 v){
+  const vec2 C = vec2(1.0/6.0, 1.0/3.0);
+  const vec4 D = vec4(0.0, 0.5, 1.0, 2.0);
+  vec3 i  = floor(v + dot(v, C.yyy));
+  vec3 x0 = v - i + dot(i, C.xxx);
+  vec3 g = step(x0.yzx, x0.xyz);
+  vec3 l = 1.0 - g;
+  vec3 i1 = min(g.xyz, l.zxy);
+  vec3 i2 = max(g.xyz, l.zxy);
+  vec3 x1 = x0 - i1 + C.xxx;
+  vec3 x2 = x0 - i2 + C.yyy;
+  vec3 x3 = x0 - D.yyy;
+  i = mod289(i);
+  vec4 p = permute(permute(permute(
+             i.z + vec4(0.0, i1.z, i2.z, 1.0))
+           + i.y + vec4(0.0, i1.y, i2.y, 1.0))
+           + i.x + vec4(0.0, i1.x, i2.x, 1.0));
+  float n_ = 0.142857142857;
+  vec3 ns = n_ * D.wyz - D.xzx;
+  vec4 j = p - 49.0 * floor(p * ns.z * ns.z);
+  vec4 x_ = floor(j * ns.z);
+  vec4 y_ = floor(j - 7.0 * x_);
+  vec4 x = x_ *ns.x + ns.yyyy;
+  vec4 y = y_ *ns.x + ns.yyyy;
+  vec4 h = 1.0 - abs(x) - abs(y);
+  vec4 b0 = vec4(x.xy, y.xy);
+  vec4 b1 = vec4(x.zw, y.zw);
+  vec4 s0 = floor(b0)*2.0 + 1.0;
+  vec4 s1 = floor(b1)*2.0 + 1.0;
+  vec4 sh = -step(h, vec4(0.0));
+  vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy;
+  vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww;
+  vec3 p0 = vec3(a0.xy, h.x);
+  vec3 p1 = vec3(a0.zw, h.y);
+  vec3 p2 = vec3(a1.xy, h.z);
+  vec3 p3 = vec3(a1.zw, h.w);
+  vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2,p2), dot(p3,p3)));
+  p0 *= norm.x; p1 *= norm.y; p2 *= norm.z; p3 *= norm.w;
+  vec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);
+  m = m * m;
+  return 42.0 * dot(m*m, vec4(dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3)));
+}
+
+/* 3段だけ重ねる。laptopでも滑らかに動く範囲 */
+float fbm(vec3 p){
+  float f = 0.0, a = 0.5;
+  for(int i = 0; i < 3; i++){ f += a * snoise(p); p *= 2.03; a *= 0.5; }
+  return f;
+}
+
+void main(){
+  vec2 uv = gl_FragCoord.xy / uRes;
+  float asp = uRes.x / uRes.y;
+  vec2 p = (uv - 0.5) * vec2(asp, 1.0);
+  float t = uTime * 0.055;
+
+  /* 座標をゆがめて、有機的な塊をつくる */
+  vec2 q = vec2(fbm(vec3(p*1.25, t)), fbm(vec3(p*1.25 + 5.2, t)));
+  vec2 r = vec2(fbm(vec3(p*1.05 + q*1.5 + 1.7, t*1.15)),
+                fbm(vec3(p*1.05 + q*1.5 + 9.2, t*1.15)));
+  float n = fbm(vec3(p*0.95 + r*1.7, t*0.9)) * 0.5 + 0.5;
+
+  vec3 cBlue   = vec3(0.086, 0.145, 0.420);
+  vec3 cPurple = vec3(0.435, 0.247, 0.678);
+  vec3 cCoral  = vec3(1.000, 0.435, 0.353);
+
+  vec3 col = mix(cBlue, cPurple, smoothstep(0.22, 0.60, n));
+  col = mix(col, cCoral, smoothstep(0.58, 0.94, n + length(r)*0.22));
+
+  /* 中心を少し明るく、縁を落とす */
+  col *= 1.06 - 0.34 * length(p * 0.85);
+
+  /* フィルムの粒子 */
+  float g = fract(sin(dot(gl_FragCoord.xy + uTime*60.0, vec2(12.9898, 78.233))) * 43758.5453);
+  col += (g - 0.5) * 0.040;
+
+  gl_FragColor = vec4(col, 1.0);
+}
+</script>
+
 <script>
-/* ================= 粒子でできた銀河 =================
-   中心が暖かい琥珀色、外へ行くほど紫になる渦巻き。
-   ドラッグで回せて、ホイールで寄れる。
-   WebGLが使えない・動きを減らす設定のときは、静止した背景に切り替える。 */
+/* ================= 流体グラデーションの背景 =================
+   四角ひとつに自作のシェーダーを貼るだけ。後処理は使わない。
+   描画は実サイズより低い解像度で行い、CSSで引き伸ばす。
+   グラデーションは滑らかなので粗さは見えず、負荷だけ下がる。 */
 (function(){
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var coarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
   var canvas = document.getElementById('gl');
-  var hero   = document.querySelector('.ghero');
+  var hero   = document.querySelector('.fhero');
   var fallback = document.getElementById('nogl');
 
   function giveUp(){
@@ -772,119 +861,50 @@ footer .fnote{margin-top:20px;font-size:.78rem;color:#6D6A64}
   catch(e){ giveUp(); return; }
   if(!renderer || !renderer.getContext()){ giveUp(); return; }
 
-  function size(){ return {w: hero.clientWidth, h: hero.clientHeight}; }
-  var s = size();
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1, coarse?1.5:2));
-  renderer.setSize(s.w, s.h, false);
-  renderer.outputEncoding = THREE.sRGBEncoding;
+  var SCALE = coarse ? 0.55 : 0.75;      /* 実サイズに対する描画倍率 */
+  renderer.setPixelRatio(1);
 
-  var scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x0A0616);
-  scene.fog = new THREE.FogExp2(0x0A0616, 0.055);
+  var scene  = new THREE.Scene();
+  var camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
 
-  var camera = new THREE.PerspectiveCamera(56, s.w/s.h, 0.1, 120);
-  camera.position.set(0, 4.4, 9.6);
-
-  /* --- 銀河をつくる --- */
-  var COUNT   = coarse ? 18000 : 50000;   /* 端末に合わせて粒の数を変える */
-  var RADIUS  = 6.0;
-  var BRANCH  = 4;
-  var SPIN    = 1.15;
-  var RAND    = 0.32;
-  var POWER   = 3.0;
-  var C_IN    = new THREE.Color(0xFFB259);  /* 中心：暖かい琥珀 */
-  var C_OUT   = new THREE.Color(0x8B5CF6);  /* 外周：紫 */
-
-  var pos = new Float32Array(COUNT*3);
-  var col = new Float32Array(COUNT*3);
-  var tmp = new THREE.Color();
-
-  for(var i=0;i<COUNT;i++){
-    var i3 = i*3;
-    var r  = Math.pow(Math.random(), 1.6) * RADIUS;
-    var branchAngle = ((i % BRANCH) / BRANCH) * Math.PI * 2;
-    var spinAngle   = r * SPIN;
-
-    function jitter(){
-      return Math.pow(Math.random(), POWER) * (Math.random()<0.5 ? 1 : -1) * RAND * r;
-    }
-    pos[i3  ] = Math.cos(branchAngle + spinAngle) * r + jitter();
-    pos[i3+1] = jitter() * 0.42;                    /* 円盤なので上下は薄く */
-    pos[i3+2] = Math.sin(branchAngle + spinAngle) * r + jitter();
-
-    tmp.copy(C_IN).lerp(C_OUT, Math.min(r / RADIUS, 1));
-    col[i3  ] = tmp.r; col[i3+1] = tmp.g; col[i3+2] = tmp.b;
-  }
-
-  var geo = new THREE.BufferGeometry();
-  geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-  geo.setAttribute('color',    new THREE.BufferAttribute(col, 3));
-
-  var mat = new THREE.PointsMaterial({
-    size: coarse ? 0.055 : 0.038,
-    sizeAttenuation: true,
-    depthWrite: false,
-    blending: THREE.AdditiveBlending,
-    vertexColors: true,
-    transparent: true,
-    opacity: 0.95
+  var uniforms = {
+    uTime: { value: 0 },
+    uRes:  { value: new THREE.Vector2(1, 1) }
+  };
+  var fsEl = document.getElementById('fs');
+  var mat = new THREE.ShaderMaterial({
+    uniforms: uniforms,
+    vertexShader: 'void main(){ gl_Position = vec4(position, 1.0); }',
+    fragmentShader: fsEl ? fsEl.textContent : ''
   });
-  var galaxy = new THREE.Points(geo, mat);
-  scene.add(galaxy);
+  scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), mat));
 
-  /* 中心の光 */
-  var core = new THREE.Mesh(
-    new THREE.SphereGeometry(0.28, 24, 24),
-    new THREE.MeshBasicMaterial({color:0xFFD9A0, transparent:true, opacity:0.85})
-  );
-  scene.add(core);
-
-  /* --- ドラッグで回す・ホイールで寄る --- */
-  var controls = null;
-  if(THREE.OrbitControls){
-    controls = new THREE.OrbitControls(camera, canvas);
-    controls.enableDamping = true;
-    controls.dampingFactor = 0.06;
-    controls.enablePan = false;
-    controls.minDistance = 3.2;
-    controls.maxDistance = 16;
-    controls.maxPolarAngle = Math.PI * 0.86;
-    controls.rotateSpeed = 0.55;
-    controls.zoomSpeed = 0.7;
-    /* スマホでは1本指をページのスクロールに使う。2本指で回す */
-    if(coarse){
-      controls.touches = { ONE: null, TWO: THREE.TOUCH.DOLLY_ROTATE };
-    }
+  /* シェーダーが通らなかったら静止背景に切り替える */
+  try{ renderer.compile(scene, camera); }catch(e){ giveUp(); return; }
+  if(mat.program && mat.program.diagnostics && mat.program.diagnostics.runnable === false){
+    giveUp(); return;
   }
 
   var visible = true;
   if('IntersectionObserver' in window){
-    new IntersectionObserver(function(es){
-      visible = es[0].isIntersecting;    /* 画面外では描かない */
-    },{threshold:0}).observe(hero);
-  }
-
-  var t0 = 0;
-  function frame(t){
-    requestAnimationFrame(frame);
-    if(!visible) return;
-    var dt = Math.min((t - t0)/1000, 0.05); t0 = t;
-    galaxy.rotation.y += dt * 0.055;       /* ゆっくり回る */
-    core.scale.setScalar(1 + Math.sin(t*0.0015)*0.09);
-    if(controls) controls.update();
-    renderer.render(scene, camera);
+    new IntersectionObserver(function(es){ visible = es[0].isIntersecting; },{threshold:0}).observe(hero);
   }
 
   function resize(){
-    var s = size();
-    camera.aspect = s.w/s.h;
-    camera.updateProjectionMatrix();
-    renderer.setSize(s.w, s.h, false);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio||1, coarse?1.5:2));
+    var w = hero.clientWidth, h = hero.clientHeight;
+    renderer.setSize(Math.round(w*SCALE), Math.round(h*SCALE), false);
+    uniforms.uRes.value.set(Math.round(w*SCALE), Math.round(h*SCALE));
   }
   window.addEventListener('resize', resize, {passive:true});
   resize();
-  requestAnimationFrame(frame);
+
+  var start = performance.now();
+  (function frame(){
+    requestAnimationFrame(frame);
+    if(!visible) return;
+    uniforms.uTime.value = (performance.now() - start) / 1000;
+    renderer.render(scene, camera);
+  })();
 })();
 
 /* ================= ページ側の動き ================= */
